@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Thanh Toán - CashVay</title>
+    <link rel="stylesheet" href="detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="detail-container">
+
+        <div class="header-banner">
+            <img src="logo.png" alt="Logo CashVay" style="width: 44px; height: 44px; border-radius: 8px; margin-bottom: 6px; object-fit: contain;">
+            <h2>HỆ THỐNG CASHVAY</h2>
+            <p>Vui lòng hoàn thành nghĩa vụ thanh toán hợp đồng dưới đây</p>
+        </div>
+
+        <div class="detail-card">
+            <div class="card-title"><i class="fa-solid fa-user-shield"></i> Thông tin khách hàng</div>
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-user"></i> Họ và tên:</span>
+                <span class="value" id="cust-name">Đang tải...</span>
+            </div>
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-phone"></i> Số điện thoại:</span>
+                <span class="value" id="cust-phone">-</span>
+            </div>
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-id-card"></i> Số CMND/CCCD:</span>
+                <span class="value" id="cust-cccd">-</span>
+            </div>
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-credit-card"></i> Số TK người nhận:</span>
+                <span class="value" id="cust-soTaiKhoan">-</span>
+            </div>
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-bank"></i> Ngân hàng thụ hưởng:</span>
+                <span class="value" id="cust-nganHang">-</span>
+            </div>
+        </div>
+
+        <div class="detail-card">
+            <div class="card-title"><i class="fa-solid fa-file-invoice-dollar"></i> Thông tin khoản vay</div>
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-calendar-days"></i> Ngày thanh toán:</span>
+                <span class="value" id="cust-hanThanhToan">-</span>
+            </div>
+
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-money-check-dollar"></i> Số tiền giải ngân:</span>
+                <span class="value" id="cust-tienGiaiNgan">-</span>
+            </div>
+
+            <!-- <div class="info-row">
+                <span class="label"><i class="fa-solid fa-calendar-xmark"></i> Hạn cuối thanh toán:</span>
+                <span class="value highlight" id="cust-hanThanhToan">-</span>
+            </div> -->
+            <div class="info-row">
+                <span class="label"><i class="fa-solid fa-hand-holding-dollar"></i> Số tiền thanh toán:</span>
+                <span class="value highlight" id="cust-tienCanThanhToan">-</span>
+            </div>
+        </div>
+
+        <div class="detail-card">
+            <div class="card-title"><i class="fa-solid fa-building-columns"></i> Thông tin thanh toán doanh nghiệp</div>
+            <p style="font-size: 13px; color: #536c61; margin-bottom: 12px;">Vui lòng chuyển khoản đúng số tiền thanh toán
+                vào tài khoản doanh nghiệp dưới đây:</p>
+
+            <div class="payment-box">
+                <div class="copy-row">
+                    <div>
+                        <div style="font-size: 11px; color:#536c61;">NGÂN HÀNG THỤ HƯỞNG</div>
+                        <span id="company-bank" style="font-weight:700; color:#2b594a;">Đang tải...</span>
+                    </div>
+                    <button class="btn-copy" onclick="copyText('company-bank')">Copy</button>
+                </div>
+
+                <div class="copy-row">
+                    <div>
+                        <div style="font-size: 11px; color:#536c61;">SỐ TÀI KHOẢN DOANH NGHIỆP</div>
+                        <span id="account-number" style="font-weight:700; color:#2b594a; font-size:16px;">Đang
+                            tải...</span>
+                    </div>
+                    <button class="btn-copy" onclick="copyText('account-number')">Copy</button>
+                </div>
+
+                <div class="copy-row">
+                    <div>
+                        <div style="font-size: 11px; color:#777;">TÊN CHỦ TÀI KHOẢN</div>
+                        <span id="company-owner" style="font-weight:700; color:#222;">Đang tải...</span>
+                    </div>
+                    <button class="btn-copy" onclick="copyText('company-owner')">Copy</button>
+                </div>
+
+                <div class="qr-section">
+                    <p class="qr-heading">MÃ QR THANH TOÁN DOANH NGHIỆP</p>
+                    <p class="qr-sub">Quét mã để thanh toán nhanh</p>
+                    <div class="qr-code-box">
+                        <img id="company-qr" src="" alt="Mã QR Giao Dịch" style="display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" id="back-btn" class="btn-system-logout">
+            <i class="fa-solid fa-arrow-left"></i> Quay lại trang chủ
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentUser = JSON.parse(localStorage.getItem('current_user'));
+            if (!currentUser) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            let displayData = null;
+            const backBtn = document.getElementById('back-btn');
+            const adminViewData = JSON.parse(localStorage.getItem('view_customer_detail'));
+
+            if (currentUser.phone === 'admin' || currentUser.username === 'admin') {
+                displayData = adminViewData;
+                backBtn.innerHTML = `<i class="fa-solid fa-arrow-left"></i> Quay lại trang quản trị`;
+                backBtn.href = 'admin.html';
+            } else {
+                displayData = currentUser;
+                backBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Đăng xuất khỏi hệ thống`;
+                backBtn.href = '#';
+                backBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    localStorage.removeItem('current_user');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            if (displayData) {
+                document.getElementById('cust-name').innerText = displayData.name || '-';
+                document.getElementById('cust-phone').innerText = displayData.phone || '-';
+                document.getElementById('cust-cccd').innerText = displayData.cccd || '-';
+                document.getElementById('cust-soTaiKhoan').innerText = displayData.soTaiKhoan || '-';
+                document.getElementById('cust-nganHang').innerText = displayData.nganHang || '-';
+                // document.getElementById('cust-hanThanhToan').innerText = displayData.hanThanhToan || displayData.hanTT || '-';
+                document.getElementById('cust-hanThanhToan').innerText = displayData.hanThanhToan || displayData.hanTT || '-';
+
+                const goc = parseFloat(displayData.tienGiaiNgan || displayData.goc) || 0;
+                const phaiTT = parseFloat(displayData.tienCanThanhToan || displayData.phaiTT) || 0;
+                document.getElementById('cust-tienGiaiNgan').innerText = goc.toLocaleString('vi-VN') + "đ";
+                document.getElementById('cust-tienCanThanhToan').innerText = phaiTT.toLocaleString('vi-VN') + "đ";
+            } else {
+                alert("Không tìm thấy thông tin hồ sơ khách hàng!");
+            }
+
+            loadCompanyConfigFromServer();
+        });
+
+        function loadCompanyConfigFromServer() {
+            fetch('/api/config')
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success && result.data) {
+                        const cfg = result.data;
+                        document.getElementById('account-number').innerText = cfg.bankNumber || 'Chưa cấu hình';
+                        document.getElementById('company-bank').innerText = cfg.bankName || 'Chưa cấu hình';
+                        document.getElementById('company-owner').innerText = cfg.ownerName || 'Chưa cấu hình';
+
+                        const qrImg = document.getElementById('company-qr');
+                        if (cfg.qrCodeUrl) {
+                            qrImg.src = cfg.qrCodeUrl;
+                            qrImg.style.display = "block";
+                        } else {
+                            qrImg.style.display = "none";
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.error("Lỗi tải thông tin doanh nghiệp:", err);
+                    document.getElementById('account-number').innerText = "Lỗi tải!";
+                });
+        }
+
+        function copyText(elementId) {
+            const targetElement = document.getElementById(elementId);
+            let textToCopy = targetElement.innerText;
+
+            if (textToCopy === "Đang tải..." || textToCopy === "-" || textToCopy === "Lỗi tải!") return;
+
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => alert("Đã sao chép thành công: " + textToCopy))
+                .catch(() => alert("Trình duyệt của bạn chặn tự động sao chép!"));
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111111" />
+  <title>CashVay — Vay Nhanh Tiện Lợi & Uy Tín</title>
+  <style>
+    :root{
+      --accent:#2b594a;
+      --accent-dark:#1b3d32;
+      --accent-hover:#22473b;
+      --accent-light:#50ba88;
+      --accent-vibrant:#38a169;
+      --accent-gradient:linear-gradient(135deg, #2b594a 0%, #367c63 50%, #48aa82 100%);
+      --accent-gradient-hover:linear-gradient(135deg, #21473a 0%, #2b634f 50%, #3a8c6a 100%);
+      --page:#ffffff;
+      --outer:#f4f8f6;
+      --text:#0e2019;
+      --muted:#536c61;
+      --placeholder:#8ea59a;
+      --light:#f0faf5;
+      --light-border:#bde5cf;
+      --border:#dfede6;
+      --shadow:0 10px 25px -5px rgba(43,89,74,0.12), 0 8px 10px -6px rgba(0,0,0,0.04);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--outer);color:var(--text);font-family:"Segoe UI",Roboto,-apple-system,Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    button,input{font:inherit}
+    button{cursor:pointer}
+    .page{width:min(100% - 24px,562px);margin:10px auto 28px;background:var(--page);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+    .topbar{height:76px;display:flex;align-items:center;justify-content:center;background:#ffffff;color:var(--accent);font-size:26px;font-weight:800;letter-spacing:.02em;border-bottom:1px solid var(--border);text-shadow:none}
+    .hero{border-bottom:3px solid var(--accent);background:#ffffff}
+    .hero img{display:block;width:100%;height:auto;image-rendering:auto}
+    .section{padding:24px 32px}
+    .intro{position:relative;min-height:290px;overflow:hidden;padding-top:34px}
+    .intro h1{position:relative;z-index:2;margin:66px 0 0;font-size:38px;line-height:1.28;font-weight:700;letter-spacing:-.035em;max-width:330px;color:var(--accent)}
+    .hand{position:absolute;right:-7px;top:22px;width:57%;height:auto;z-index:1}
+
+    .loan-form{padding-top:14px}
+    .label{font-size:21px;font-weight:700;line-height:1.35;letter-spacing:-.015em;margin-bottom:10px;color:var(--text)}
+    .amount{font-size:32px;font-weight:800;line-height:1.2;letter-spacing:-.025em;color:var(--accent);margin-bottom:10px}
+    .range{width:100%;margin:0;appearance:none;-webkit-appearance:none;height:12px;border-radius:999px;outline:none;background:linear-gradient(to right,var(--accent) 0,var(--accent) var(--range-progress,5.88%),#dfede6 var(--range-progress,5.88%),#dfede6 100%)}
+    .range::-webkit-slider-thumb{-webkit-appearance:none;width:33px;height:33px;border-radius:50%;background:linear-gradient(135deg,#2b594a,#48aa82);border:4px solid #fff;box-shadow:0 2px 10px rgba(43,89,74,0.4);cursor:pointer}
+    .range::-moz-range-thumb{width:25px;height:25px;border-radius:50%;background:linear-gradient(135deg,#2b594a,#48aa82);border:4px solid #fff;box-shadow:0 2px 10px rgba(43,89,74,0.4);cursor:pointer}
+    .range-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:17px;font-weight:700;margin:13px 0 24px}
+
+    .field{height:56px;border:1.5px solid var(--border);border-radius:11px;background:#ffffff;display:flex;align-items:center;padding:0 12px;gap:10px;transition:border-color .2s,box-shadow .2s}
+    .field:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(43,89,74,.18)}
+    .field + .field{margin-top:20px}
+    .field svg{flex:0 0 auto;color:var(--accent)}
+    .prefix{font-size:19px;font-weight:700;color:var(--accent);white-space:nowrap}
+    .field input{border:0;outline:0;min-width:0;width:100%;font-size:19px;font-weight:600;color:var(--text);background:transparent}
+    .field input::placeholder{color:var(--placeholder)}
+    .otp-button{height:40px;padding:0 12px;border:0;border-radius:6px;background:var(--accent-gradient);color:#fff;font-size:13px;font-weight:700;letter-spacing:.5px;white-space:nowrap;box-shadow:0 2px 8px rgba(43,89,74,0.3)}
+    .otp-button:disabled{background:#8ea59a;cursor:not-allowed;box-shadow:none}
+    .helper{min-height:20px;margin:8px 2px 0;font-size:14px;color:#dc2626}
+    .terms{display:flex;align-items:flex-start;gap:13px;margin:29px 3px 26px;font-size:19px;line-height:1.45}
+    .terms input{position:absolute;opacity:0;pointer-events:none}
+    .fake-check{width:24px;height:24px;border-radius:4px;border:2px solid var(--accent);display:grid;place-items:center;flex:0 0 24px;margin-top:2px;color:transparent;background:#ffffff;font-weight:900}
+    .terms input:checked + .fake-check{background:var(--accent);color:#ffffff}
+    .terms a{color:var(--accent);font-weight:700;text-decoration:none}
+    .login{width:100%;height:52px;border:0;border-radius:8px;background:var(--accent-gradient);color:#ffffff;font-size:18px;font-weight:700;letter-spacing:1px;box-shadow:0 4px 14px rgba(43,89,74,.32);cursor:pointer;transition:all .2s}
+    .login:hover,.otp-button:hover:not(:disabled){background:var(--accent-gradient-hover);box-shadow:0 6px 18px rgba(43,89,74,.42)}
+    .login:active,.otp-button:active:not(:disabled){transform:translateY(1px)}
+    .status{display:none;margin-top:14px;padding:12px 14px;border-radius:8px;font-size:15px;line-height:1.4}
+    .status.show{display:block}
+    .status.success{background:#f0faf5;border:1px solid #bde5cf;color:#1b3d32}
+    .status.error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+
+    .legal{padding:16px 38px 0;color:var(--muted);font-size:16px;font-weight:600;line-height:1.62}
+    .steps{padding:25px 8px 0}
+    .steps h2{font-size:30px;line-height:1.2;letter-spacing:-.025em;margin:0 0 5px;color:var(--text)}
+    .steps-sub{font-size:21px;font-weight:600;line-height:1.48;margin-bottom:25px;color:var(--muted)}
+    .timeline{position:relative}
+    .timeline:before{content:"";position:absolute;left:31px;top:34px;bottom:72px;border-left:3px dotted #bde5cf}
+    .step{position:relative;padding-left:80px;margin-bottom:58px;min-height:145px}
+    .step:last-child{margin-bottom:20px}
+    .number{position:absolute;left:0;top:0;width:63px;height:63px;border-radius:50%;display:grid;place-items:center;background:#ffffff;border:2.5px solid var(--accent);box-shadow:0 3px 12px rgba(43,89,74,.15);font-size:29px;font-weight:700;color:var(--accent);z-index:2}
+    .step-line{display:flex;align-items:center;gap:13px;min-height:64px}
+    .step-icon{width:64px;height:64px;color:var(--accent);flex:0 0 64px}
+    .step-title{font-size:20px;font-weight:700;line-height:1.35;letter-spacing:-.01em;color:var(--text)}
+    .step-desc{margin:11px 0 0 0;font-size:17px;font-weight:400;line-height:1.55;padding-left:0;color:var(--muted)}
+
+    .benefits{padding-top:0}
+    .benefits h2{font-size:36px;line-height:1.18;letter-spacing:-.035em;margin:0 0 27px;color:var(--text)}
+    .benefit{border:1.5px solid var(--border);border-radius:11px;padding:16px 19px;margin-bottom:18px;font-size:20px;font-weight:600;line-height:1.45;background:#ffffff;color:var(--text);box-shadow:0 2px 6px rgba(0,0,0,0.02)}
+
+    .faq{padding-top:20px}
+    .faq h2{font-size:30px;line-height:1.2;letter-spacing:-.025em;margin:0 0 14px;color:var(--text)}
+    .faq-item{margin-bottom:10px;background:var(--light);border-left:5px solid var(--accent);border-radius:0 8px 8px 0}
+    .faq-question{width:100%;border:0;background:transparent;display:flex;align-items:center;justify-content:space-between;text-align:left;padding:15px 14px 15px 12px;gap:14px;color:var(--text);font-size:19px;font-weight:600;line-height:1.4;cursor:pointer}
+    .faq-plus{position:relative;width:28px;height:28px;flex:0 0 28px}
+    .faq-plus:before,.faq-plus:after{content:"";position:absolute;background:var(--accent);left:4px;right:4px;top:13px;height:3px;border-radius:2px;transition:transform .2s}
+    .faq-plus:after{transform:rotate(90deg)}
+    .faq-item.open .faq-plus:after{transform:rotate(0)}
+    .faq-answer{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease}
+    .faq-answer > div{overflow:hidden}
+    .faq-answer p{margin:10px 12px 0 12px;padding:12px 12px;color:var(--muted);font-size:17px;line-height:1.55;font-weight:600;background:#ffffff;border-radius:6px}.faq-answer p:last-child{margin-bottom:12px}
+    .faq-item.open .faq-answer{grid-template-rows:1fr}
+
+    footer{background:#0c1b15;color:#f4f8f6;text-align:center;padding:38px 24px 30px;margin-top:10px;border-top:3px solid var(--accent)}
+    .thanks{max-width:430px;margin:0 auto 22px;font-size:16px;font-weight:600;line-height:1.5;color:#8ea59a}
+    .service{font-size:21px;font-weight:700;letter-spacing:-.015em;margin-bottom:14px;color:#ffffff}
+    .socials{display:flex;justify-content:center;gap:12px;margin:0 0 20px}
+    .social{appearance:none;width:46px;height:46px;padding:0;border-radius:14px;display:grid;place-items:center;color:var(--accent-light);background:#152d24;border:1px solid rgba(80,186,136,.25);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 22px rgba(0,0,0,.15);transition:transform .18s ease,background .18s ease,border-color .18s ease}
+    .social:hover{transform:translateY(-2px);background:#1e3f32;border-color:var(--accent-light)}
+    .social:active{transform:translateY(0)}
+    .social:focus-visible{outline:3px solid rgba(255,255,255,.35);outline-offset:3px}
+    .social svg{width:25px;height:25px;display:block}
+    .social.zalo svg{width:29px;height:29px}
+    .footer-copy{font-size:15px;font-weight:600;line-height:1.5;color:#8ea59a;margin-top:2px}
+    .copyright{font-size:15px;font-weight:600;line-height:1.5;margin-top:2px;color:#c0d5cb}
+    .recaptcha{max-width:430px;margin:7px auto 0;font-size:12px;line-height:1.45;color:#536c61}
+    .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,25px);opacity:0;pointer-events:none;background:#ffffff;color:var(--text);padding:12px 16px;border-radius:8px;box-shadow:0 8px 25px rgba(0,0,0,.08);border:1px solid var(--border);z-index:50;font-size:15px;transition:.25s;max-width:calc(100% - 32px);text-align:center}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+
+    @media(max-width:600px){
+      .page{width:calc(100% - 16px);margin:10px auto 20px}
+      .topbar{height:62px;font-size:25px}
+      .section{padding:20px 20px}
+      .intro{min-height:260px;padding-top:25px}
+      .intro h1{font-size:29px;line-height:1.3;margin-top:62px;max-width:210px}
+      .hand{width:59%;right:-13px;top:24px}
+      .label{font-size:19px}.amount{font-size:30px}.range-meta{font-size:15px}
+      .field input,.prefix{font-size:17px}.otp-button{font-size:12px;padding:0 9px}
+      .terms{font-size:17px;margin-top:27px}
+      .legal{padding:16px 31px 0;font-size:15px}
+      .steps h2{font-size:28px}.steps-sub{font-size:19px}
+      .step{padding-left:63px;margin-bottom:52px}.number{width:54px;height:54px;font-size:25px}.timeline:before{left:26px}.step-icon{width:55px;height:55px;flex-basis:55px}.step-title{font-size:17px}.step-desc{font-size:15px}
+      .benefits h2{font-size:33px}.benefit{font-size:18px;padding:14px 17px}
+      .faq h2{font-size:28px}.faq-question{font-size:17px}.faq-answer p{font-size:15px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar"><img src="logo.png" style="width: 36px; height: 36px; border-radius: 8px; margin-right: 10px; vertical-align: middle; object-fit: contain;">CashVay</header>
+    <div class="hero"><img src="image1.png"></div>
+
+    <section class="section intro" style="padding: 0px;">
+      <img class="hand" src="image2.png" alt="Bàn tay nhận khoản vay" />
+      <h1>Các khoản vay cá nhân nhanh</h1>
+    </section>
+
+    <section class="section loan-form" aria-labelledby="loan-title">
+      <div class="label" style="margin-bottom: 6px; color: #000000;">Chạm nhẹ một cái, tiền về tay ngay</div>
+      <div class="label" id="loan-title">Số tiền cần vay</div>
+      <div class="amount" id="amountText">10.000.000 đ</div>
+      <input class="range" id="loanRange" type="range" min="5" max="90" step="1" value="10" aria-label="Số tiền cần vay, đơn vị triệu đồng" />
+      <div class="range-meta"><span>5 triệu</span><span>90 triệu</span></div>
+
+      <div class="field">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.08 3h3a2 2 0 0 1 2 1.72c.12.89.33 1.76.63 2.6a2 2 0 0 1-.45 2.11L9 10.91a16 16 0 0 0 4.09 4.09l1.48-1.29a2 2 0 0 1 2.11-.45c.84.3 1.71.51 2.6.63A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="prefix">+84</span>
+        <input id="phoneInput" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="50" placeholder="Nhập số điện thoại" aria-label="Nhập số điện thoại" />
+      </div>
+      <div class="helper" id="phoneError" aria-live="polite"></div>
+
+
+
+      <label class="terms">
+        <input id="termsInput" type="checkbox" checked />
+        <span class="fake-check">✓</span>
+        <span>Tôi đã đọc <a href="#privacy" id="privacyLink">Vui lòng đọc điều khoản bảo mật</a></span>
+      </label>
+
+      <button class="login" id="loginButton" type="button">ĐĂNG NHẬP</button>
+      <div class="status" id="formStatus" role="status" aria-live="polite"></div>
+    </section>
+
+    <div class="legal" id="privacy">
+      Dịch vụ của chúng tôi giúp đánh giá các đối tác vay uy tín với các sản phẩm tài chính đa dạng, thời gian trả nợ linh hoạt từ 91 đến 180 ngày, với lãi suất APR tối thiểu là 0% và tối đa là 20%. Chúng tôi không tính phí sử dụng dịch vụ. Chi phí cuối cùng mà người vay phải trả phụ thuộc vào từng khoản vay. Người dùng sẽ nhận được thông tin đầy đủ và chính xác về APR, cũng như tất cả các khoản phí trước khi ký hợp đồng vay. Ví dụ: bạn vay 10.000.000 đồng và chọn trả góp trong 6 tháng (180 ngày), số tiền bạn phải trả hàng tháng là 1.833.333,3 đồng/tháng và lãi vay sẽ là 166.666,7 đồng/tháng (APR = 20%). Tổng số tiền bạn phải trả là 11.000.000 đồng.
+    </div>
+
+    <section class="section steps">
+      <h2>Bạn chỉ cần 3 bước để được vay</h2>
+      <div class="steps-sub">Nhận khoản vay tới 15 000 000 đồng cũng dễ như đếm 1, 2, 3:</div>
+      <div class="timeline">
+        <article class="step">
+          <div class="number">1</div>
+          <div class="step-line">
+            <svg class="step-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="15" y="12" width="31" height="45" rx="5"/><path d="M24 12V8a5 5 0 0 1 5-5h9a5 5 0 0 1 5 5v4"/><path d="M25 37l7 7 14-18"/><path d="M10 18h5v34h-5a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4z"/></svg>
+            <div class="step-title">Hãy điền hồ sơ trên trang</div>
+          </div>
+          <div class="step-desc">Để nộp đơn vay, chỉ cần có CMND (CCCD) và thẻ ngân hàng còn hiệu lực</div>
+        </article>
+        <article class="step">
+          <div class="number">2</div>
+          <div class="step-line">
+            <svg class="step-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 5l6 5 8-1 4 7 8 3-1 8 5 6-5 6 1 8-8 3-4 7-8-1-6 5-6-5-8 1-4-7-8-3 1-8-5-6 5-6-1-8 8-3 4-7 8 1z"/><path d="M20 32l8 8 17-19"/></svg>
+            <div class="step-title">Nhận các đề xuất tốt nhất thị trường</div>
+          </div>
+          <div class="step-desc">Dịch vụ của chúng tôi so sánh hàng trăm bên cho vay, lựa chọn các đề xuất có lợi nhất và đã sẵn sàng cho bạn vay</div>
+        </article>
+        <article class="step">
+          <div class="number">3</div>
+          <div class="step-line">
+            <svg class="step-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="13" width="45" height="31" rx="3"/><circle cx="29.5" cy="28.5" r="10"/><path d="M13 28.5h2M44 28.5h2M8 49c12 0 25 1 40 6"/></svg>
+            <div class="step-title">Nhận tiền</div>
+          </div>
+          <div class="step-desc">Nhận khoản vay vào thẻ, tài khoản ngân hàng hay tiền mặt chỉ trong vài phút</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section benefits">
+      <h2>6 lợi ích bạn sẽ nhận</h2>
+      <div class="benefit">Dịch vụ hoạt động 24/7</div>
+      <div class="benefit">Đề nghị cá nhân</div>
+      <div class="benefit">Xử lý yêu cầu gần như ngay lập tức</div>
+      <div class="benefit">Chúng tôi không quan tâm đến lịch sử tín dụng của bạn</div>
+      <div class="benefit">Tất cả những gì bạn cần là internet, căn cước và tài khoản ngân hàng</div>
+      <div class="benefit">Dịch vụ trực tuyến có sẵn ở mọi nơi tại Việt Nam</div>
+    </section>
+
+    <section class="section faq">
+      <h2>Vay trực tuyến</h2>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Sự ra đời của loại hình vay tiền online nhanh</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div>
+          <p>Nhịp sống xã hội ngày càng nhanh</p>
+          <p>Đôi khi bạn cần tiền để chi tiêu hằng ngày, nhưng không phải lúc nào cũng có thể vay từ bạn bè hoặc người thân, và việc đến ngân hàng cũng cần thời gian và thủ tục</p>
+          <p>Hiểu được tình hình này, dịch vụ cho vay trực tuyến 24/7 đã ra đời, cung cấp giải pháp tài chính thông minh, an toàn và tiện lợi cho khách hàng</p>
+        </div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Vay tiền nhanh online là gì</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div>
+          <p>Cho vay nhanh trực tuyến là hình thức cho vay dựa trên mô hình P2P Lending, tất cả các bước từ đăng ký, phê duyệt đến giải ngân đều được thực hiện trực tuyến, hiện tại có hai cách đăng ký vay nhanh trực tuyến chính:</p>
+          <p>Vay qua ứng dụng: Người vay cài đặt ứng dụng vay trên CH Play hoặc App Store và sau đó tiến hành đăng ký vay</p>
+          <p>Đặc điểm của sản phẩm vay trực tuyến là yêu cầu thủ tục không nhiều, chỉ cần có chứng minh nhân dân, hạn mức vay linh hoạt, thời gian phê duyệt và giải ngân nhanh, khoản vay sẽ được chuyển trực tiếp vào thẻ ATM, không cần gặp mặt, không cần chứng minh thu nhập và không cần giữ tài liệu gốc</p>
+        </div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Khi nào nên vay tiền online</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div>
+          <p>Cho vay trực tuyến có thể giải quyết nhiều vấn đề tài chính:</p>
+          <p>Cuối tháng rồi nhưng lương vẫn chưa về, cần tiền để trả tiền thuê nhà và chi phí sinh hoạt</p>
+          <p>Là sinh viên cần tiền để trả học phí hoặc mua dụng cụ học tập</p>
+          <p>Khi ốm đau bất ngờ cần tiền để mua thuốc</p>
+          <p>Tiền mừng cưới, tiệc tùng, liên hoan...</p>
+        </div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Đối tượng nào được hỗ trợ</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div>
+          <p>Hỗ trợ khách hàng trên toàn quốc, chỉ cần là công dân Việt Nam. Dù là nhân viên văn phòng, người lao động phổ thông, sinh viên học sinh... Chỉ cần có CMND là đều có thể sử dụng sản phẩm vay nhanh chuyển khoản.</p>
+        </div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Vay tiền nhanh online có lừa đảo không</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div>
+          <p>Trên thực tế, các đơn vị hỗ trợ cho vay đều hoạt động công khai và minh bạch theo quy định của pháp luật. Tuy nhiên bên cạnh đó có rất nhiều tổ chức tín dụng đen trá hình, do vậy bạn cần phải cân nhắc trước khi lựa chọn nơi vay.</p>
+        </div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Nợ xấu có vay online được không</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div>
+          <p>Có. Tuy nhiên thời gian xét duyệt có thể sẽ lâu hơn và đồng thời hạn mức vay lần đầu sẽ bị giới hạn.</p>
+        </div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Có thể vay cùng lúc nhiều nơi không</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div>
+          <p>Có nhưng cần lưu ý rằng việc đăng ký quá nhiều nơi có thể khiến cho tỷ lệ duyệt hồ sơ bị giảm.</p>
+        </div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Tại sao hồ sơ của tôi bị từ chối</span><span class="faq-plus" aria-hidden="true"></span></button>
+        <div class="faq-answer"><div>
+          <p>Hồ sơ vay bị từ chối có thể bắt nguồn từ nhiều nguyên nhân khác nhau như người đi vay thuộc nợ xấu nhóm 5, thông tin không đúng sự thật, đang có khoản vay ở nhiều đơn vị khác...</p>
+        </div></div>
+      </div>
+    </section>
+    <footer>
+      <div class="thanks">Cảm ơn sự tín nhiệm của quý khách đối với chúng tôi</div>
+      <div class="service">Dịch vụ khách hàng :</div>
+      <div class="socials" aria-label="Kênh dịch vụ khách hàng">
+        <button class="social zalo" type="button" aria-label="Liên hệ qua Zalo" title="Zalo">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M5.2 6.8A4.8 4.8 0 0 1 10 2h12a4.8 4.8 0 0 1 4.8 4.8v11.4A4.8 4.8 0 0 1 22 23H13l-6.6 5.2.9-5.7a4.8 4.8 0 0 1-2.1-4V6.8Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <text x="8.2" y="16.8" fill="currentColor" font-family="Arial, sans-serif" font-size="7.2" font-weight="700">Zalo</text>
+          </svg>
+        </button>
+        <button class="social fb" type="button" aria-label="Liên hệ qua Facebook" title="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.7 22v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5H17V4.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.3H8V14h2.6v8h3.1Z"/></svg>
+        </button>
+        <button class="social chat" type="button" aria-label="Trò chuyện với chăm sóc khách hàng" title="Chăm sóc khách hàng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 13v-2a8 8 0 0 1 16 0v2"/>
+            <path d="M4 12H3a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2v-6Z"/>
+            <path d="M20 12h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2v-6Z"/>
+            <path d="M19 18c0 2-2 3-5 3"/>
+          </svg>
+        </button>
+      </div>
+      <div class="footer-copy">Cảm ơn sự tín nhiệm của quý khách đối với chúng tôi</div>
+      <div class="copyright">Copyright © 2024 CashVay. All rights reserved.</div>
+      <div class="recaptcha">This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</div>
+    </footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      const range = document.getElementById('loanRange');
+      const amountText = document.getElementById('amountText');
+      const phoneInput = document.getElementById('phoneInput');
+      const phoneError = document.getElementById('phoneError');
+      const termsInput = document.getElementById('termsInput');
+      const loginButton = document.getElementById('loginButton');
+      const formStatus = document.getElementById('formStatus');
+      const toast = document.getElementById('toast');
+
+      const formatMoney = value => new Intl.NumberFormat('vi-VN').format(value * 1000000) + ' đ';
+      function updateRange() {
+        const min = Number(range.min), max = Number(range.max), value = Number(range.value);
+        amountText.textContent = formatMoney(value);
+        range.style.setProperty('--range-progress', ((value - min) / (max - min) * 100) + '%');
+      }
+      range.addEventListener('input', updateRange);
+      updateRange();
+
+      function normalizePhone() {
+        return phoneInput.value.replace(/\D/g, '').replace(/^0+/, '');
+      }
+      function phoneIsValid() {
+        const val = phoneInput.value.trim().toLowerCase();
+        if (val.startsWith('admin')) return true;
+        const n = normalizePhone();
+        return /^(3|5|7|8|9)\d{8}$/.test(n);
+      }
+      function formatPhoneInput() {
+        const val = phoneInput.value.trim().toLowerCase();
+        if (val.startsWith('a') || val.startsWith('ad') || val.startsWith('adm') || val.startsWith('admi') || val.startsWith('admin')) {
+          phoneError.textContent = '';
+          return;
+        }
+        let digits = phoneInput.value.replace(/\D/g, '').slice(0, 10);
+        if (digits.startsWith('0')) digits = digits.slice(1);
+        digits = digits.slice(0, 9);
+        const groups = [digits.slice(0,3), digits.slice(3,6), digits.slice(6,9)].filter(Boolean);
+        phoneInput.value = groups.join(' ');
+        phoneError.textContent = digits.length && !phoneIsValid() ? 'Vui lòng nhập đúng 9 chữ số sau +84.' : '';
+      }
+      phoneInput.addEventListener('input', formatPhoneInput);
+      phoneInput.addEventListener('blur', () => {
+        const val = phoneInput.value.trim().toLowerCase();
+        if (val.startsWith('admin')) return;
+        if (!phoneIsValid()) phoneError.textContent = 'Số điện thoại chưa hợp lệ.';
+      });
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => toast.classList.remove('show'), 4000);
+      }
+
+      loginButton.addEventListener('click', () => {
+        phoneError.textContent = '';
+        formStatus.className = 'status';
+        const phoneVal = phoneInput.value.trim().toLowerCase();
+        if (phoneVal.startsWith('admin')) {
+          formStatus.textContent = 'Xác thực admin thành công trong chế độ demo.';
+          formStatus.className = 'status success show';
+          return;
+        }
+        if (!phoneIsValid()) {
+          phoneError.textContent = 'Vui lòng nhập số điện thoại hợp lệ.';
+          phoneInput.focus();
+          return;
+        }
+        if (!termsInput.checked) {
+          formStatus.textContent = 'Bạn cần đồng ý với điều khoản bảo mật.';
+          formStatus.className = 'status error show';
+          return;
+        }
+        formStatus.textContent = 'Xác thực thành công trong chế độ demo. Trang này không gửi hoặc lưu số điện thoại và mã OTP.';
+        formStatus.className = 'status success show';
+      });
+
+      document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+          const item = button.closest('.faq-item');
+          const willOpen = !item.classList.contains('open');
+          item.classList.toggle('open', willOpen);
+          button.setAttribute('aria-expanded', String(willOpen));
+        });
+      });
+
+      document.getElementById('privacyLink').addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById('privacy').scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: cashvay
+    env: node
+    plan: free
+    buildCommand: npm install && npx prisma generate
+    startCommand: node server.js
+    envVars:
+      - key: DATABASE_URL
+        sync: false
