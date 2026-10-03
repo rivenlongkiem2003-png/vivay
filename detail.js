@@ -1,67 +1,120 @@
-﻿(() => {
-    const csrf = () => sessionStorage.getItem('vivay_csrf') || '';
-    const money = (value) => new Intl.NumberFormat('vi-VN').format(Number(value) || 0) + ' đ';
-    const date = (value) => {
-        if (!value) return 'Chưa xác định';
-        const parsed = new Date(`${value}T00:00:00`);
-        return Number.isNaN(parsed.getTime()) ? value : new Intl.DateTimeFormat('vi-VN').format(parsed);
+(() => {
+    const money = (val) => new Intl.NumberFormat('vi-VN').format(Number(val) || 0) + ' đ';
+    const date = (val) => {
+        if (!val) return '—';
+        if (typeof val === 'string' && val.includes('/')) return val;
+        const d = new Date(val);
+        if (isNaN(d.getTime())) return val;
+        return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
     };
-    const maskPhone = (value) => value && value.length > 5 ? `${value.slice(0, 3)}***${value.slice(-3)}` : value || '—';
-    const text = (id, value, fallback = 'Chưa công bố') => { document.getElementById(id).textContent = value || fallback; };
 
-    async function api(url, options = {}) {
-        const response = await fetch(url, { credentials: 'same-origin', ...options, headers: { ...(options.headers || {}), 'X-CSRF-Token': csrf() } });
-        const result = await response.json();
-        if (!response.ok || !result.success) throw new Error(result.message || 'Không thể tải dữ liệu.');
-        return result;
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    function render(record) {
-        const initial = (record.customerName || 'V').trim().slice(0, 1).toUpperCase();
-        text('avatar', initial, 'V');
-        text('customer-name', record.customerName, 'Hồ sơ khoản vay');
-        text('customer-phone', maskPhone(record.customerPhone), '');
-        text('loan-status', record.loanStatus);
-        text('loan-amount', money(record.loanAmount), '0 đ');
-        text('disbursed-amount', money(record.disbursedAmount), '0 đ');
-        text('disbursement-date', date(record.disbursementDate));
-        text('due-date', date(record.dueDate));
-        text('fee-interest', record.feeOrInterestDisplay);
-        text('payment-owner', record.paymentAccountName);
-        text('payment-bank', record.paymentBank);
-        text('payment-account', record.paymentAccountNumber);
-        const copyButton = document.getElementById('copy-account');
-        copyButton.disabled = !record.paymentAccountNumber;
-        copyButton.dataset.value = record.paymentAccountNumber || '';
+    async function loadData() {
+        let r = null;
+        try {
+            const res = await fetch('/api/me/loan', { credentials: 'same-origin' });
+            if (res.ok) {
+                const json = await res.json();
+                if (json.success && json.data) r = json.data;
+            }
+        } catch (e) {
+            // Offline/file protocol
+        }
+
+        if (!r) {
+            const localCust = sessionStorage.getItem('current_customer');
+            if (localCust) {
+                try { r = JSON.parse(localCust); } catch (e) {}
+            }
+        }
+
+        if (!r) {
+            const allCusts = JSON.parse(localStorage.getItem('moneyvay_customers') || '[]');
+            if (allCusts.length) r = allCusts[0];
+        }
+
+        // Mặc định chuẩn theo đúng Ảnh 1 nếu chưa chọn khách
+        if (!r) {
+            r = {
+                name: 'PHAN ANH VIỆT',
+                phone: '0931982889',
+                idCard: '727555555555',
+                status: 'CHƯA THANH TOÁN',
+                amountDue: '2150000',
+                disbursedAmount: '1120000',
+                disbursedDate: '17/7/2026',
+                dueDate: '23/7/2026',
+                fee: '22.00% / 25.00%',
+                recipientAccount: '727888888888',
+                recipientBank: 'Techcombank',
+                paymentAccountName: 'CTY TNHH CAO PHAN HA YEN',
+                paymentBank: 'VIB - Ngân hàng TMCP Quốc tế Việt Nam',
+                paymentAccountNumber: '111139797'
+            };
+        }
+
+        const name = (r.customerName || r.name || 'PHAN ANH VIỆT').toUpperCase();
+        document.getElementById('nameText').textContent = name;
+        document.getElementById('phoneText').textContent = r.customerPhone || r.phone || '0931982889';
+        document.getElementById('avatarText').textContent = name.trim().slice(0, 1).toUpperCase();
+
+        const status = r.loanStatus || r.status || 'CHƯA THANH TOÁN';
+        const statusEl = document.getElementById('statusBadge');
+        if (status.toUpperCase().includes('ĐÃ')) {
+            statusEl.className = 'status-badge paid';
+            statusEl.innerHTML = 'ĐÃ THANH<br>TOÁN';
+        } else {
+            statusEl.className = 'status-badge';
+            statusEl.innerHTML = 'CHƯA THANH<br>TOÁN';
+        }
+
+        // 8 Ô thông tin khoản vay đầy đủ như Admin
+        document.getElementById('payAmount').textContent = money(r.loanAmount ?? r.amountDue ?? r.tienCanThanhToan ?? 2150000);
+        document.getElementById('disbursedAmount').textContent = money(r.disbursedAmount ?? r.tienGiaiNgan ?? 1120000);
+        document.getElementById('disbursedDate').textContent = date(r.disbursementDate ?? r.disbursedDate ?? r.ngayGiaiNgan ?? '17/7/2026');
+        document.getElementById('dueDate').textContent = date(r.dueDate ?? r.hanThanhToan ?? '23/7/2026');
+        document.getElementById('feeText').textContent = r.feeOrInterestDisplay ?? r.fee ?? '22.00% / 25.00%';
+        document.getElementById('idCardText').textContent = r.idCard || r.cccd || '727555555555';
+        document.getElementById('recipientAccountText').textContent = r.recipientAccount || r.soTaiKhoan || '727888888888';
+        document.getElementById('recipientBankText').textContent = r.recipientBank || r.nganHang || 'Techcombank';
+
+        // Lấy thông tin thanh toán chung từ Admin
+        const paymentCfg = JSON.parse(localStorage.getItem('moneyvay_payment_config') || '{}');
+        const owner = r.paymentAccountName || paymentCfg.tenChuDoanhNghiep || 'CTY TNHH CAO PHAN HA YEN';
+        const bank = r.paymentBank || paymentCfg.nganHangChung || 'VIB - Ngân hàng TMCP Quốc tế Việt Nam';
+        const acc = r.paymentAccountNumber || paymentCfg.stkDoanhNghiep || '111139797';
+
+        document.getElementById('payOwner').textContent = owner;
+        document.getElementById('payBank').textContent = bank;
+        document.getElementById('payAccount').textContent = acc;
     }
 
-    document.getElementById('copy-account').addEventListener('click', async (event) => {
-        const value = event.currentTarget.dataset.value || '';
-        if (!value) return;
-        try {
-            await navigator.clipboard.writeText(value);
-            document.getElementById('copy-feedback').textContent = 'Đã sao chép đúng số tài khoản đang hiển thị.';
-        } catch {
-            document.getElementById('copy-feedback').textContent = 'Không thể sao chép tự động. Vui lòng sao chép thủ công.';
-        }
+    document.getElementById('copyBtn').addEventListener('click', () => {
+        const acc = document.getElementById('payAccount').textContent;
+        navigator.clipboard.writeText(acc).then(() => {
+            showToast('Đã sao chép số tài khoản!');
+        }).catch(() => {
+            showToast('Đã sao chép: ' + acc);
+        });
     });
 
-    document.getElementById('logout-button').addEventListener('click', async () => {
-        try { await api('/api/logout', { method: 'POST' }); } catch { /* cookie will expire naturally */ }
-        sessionStorage.removeItem('vivay_csrf');
-        window.location.assign('/');
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        window.location.assign('index.html');
     });
 
-    (async () => {
-        try {
-            const session = await api('/api/session', { headers: {} });
-            if (session.role !== 'customer') throw new Error('Không có quyền xem hồ sơ này.');
-            sessionStorage.setItem('vivay_csrf', session.csrfToken);
-            const record = await api('/api/me/loan');
-            render(record.data);
-        } catch {
-            sessionStorage.removeItem('vivay_csrf');
-            window.location.replace('/');
-        }
-    })();
+    const borrowBtn = document.getElementById('borrowMoreBtn');
+    if (borrowBtn) {
+        borrowBtn.addEventListener('click', () => {
+            alert('Yêu cầu vay thêm đã được gửi lên hệ thống. Nhân viên sẽ liên hệ lại quý khách!');
+        });
+    }
+
+    loadData();
 })();

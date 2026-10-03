@@ -29,12 +29,24 @@ async function createFakePrisma() {
             if (!item) { const error = new Error('Missing'); error.code = 'P2025'; throw error; }
             Object.assign(item, clone(data), { updatedAt: new Date() });
             return clone(item);
+        },
+        async delete({ where }) {
+            const index = state.users.findIndex((entry) => entry.id === where.id);
+            if (index === -1) { const error = new Error('Missing'); error.code = 'P2025'; throw error; }
+            const [removed] = state.users.splice(index, 1);
+            return clone(removed);
         }
     };
     const admin = {
         async findUnique({ where }) {
             const [key, value] = Object.entries(where)[0];
             const item = state.admins.find((entry) => entry[key] === value);
+            return item ? clone(item) : null;
+        },
+        async findFirst({ where } = {}) {
+            if (!where) return state.admins[0] ? clone(state.admins[0]) : null;
+            const entries = Object.entries(where);
+            const item = state.admins.find((entry) => entries.every(([key, value]) => entry[key] === value));
             return item ? clone(item) : null;
         },
         async create({ data }) {

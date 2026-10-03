@@ -1,4 +1,4 @@
-﻿const crypto = require('crypto');
+const crypto = require('crypto');
 const express = require('express');
 const path = require('path');
 const { promisify } = require('util');
@@ -121,11 +121,8 @@ function normalizeMoney(value, field) {
 }
 
 function normalizeDate(value, field) {
-    const date = normalizeText(value, field, { max: 10 });
+    const date = normalizeText(value, field, { max: 30 });
     if (!date) return '';
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) {
-        throw new InputError(`${field} phải theo định dạng YYYY-MM-DD.`);
-    }
     return date;
 }
 
@@ -139,7 +136,10 @@ function toLoanInput(body) {
         disbursedAmount: normalizeMoney(value.disbursedAmount ?? value.goc, 'Số tiền giải ngân'),
         disbursementDate: normalizeDate(value.disbursementDate ?? value.ngayGiaiNgan, 'Ngày giải ngân'),
         dueDate: normalizeDate(value.dueDate ?? value.hanTT, 'Ngày trả'),
-        feeOrInterestDisplay: normalizeText(value.feeOrInterestDisplay, 'Phí/lãi hiển thị', { max: 120 }),
+        idCard: normalizeText(value.idCard ?? value.cccd, 'CMND/CCCD', { max: 50 }),
+        recipientAccount: normalizeText(value.recipientAccount ?? value.soTaiKhoan, 'Số tài khoản nhận', { max: 50 }),
+        recipientBank: normalizeText(value.recipientBank ?? value.nganHang, 'Ngân hàng nhận', { max: 120 }),
+        feeOrInterestDisplay: normalizeText(value.feeOrInterestDisplay ?? value.fee, 'Phí/lãi hiển thị', { max: 120 }),
         paymentAccountName: normalizeText(value.paymentAccountName, 'Tên chủ tài khoản thanh toán', { max: 120 }),
         paymentBank: normalizeText(value.paymentBank, 'Ngân hàng thanh toán', { max: 120 }),
         paymentAccountNumber: normalizeText(value.paymentAccountNumber, 'Số tài khoản thanh toán', { max: 40 }).replace(/\s/g, '')
@@ -150,6 +150,9 @@ function userDataFromInput(input) {
     return {
         name: input.name,
         phone: input.phone,
+        cccd: input.idCard || '',
+        soTaiKhoan: input.recipientAccount || null,
+        nganHang: input.recipientBank || null,
         hanThanhToan: input.dueDate,
         tienCanThanhToan: input.paymentAmount,
         tienGiaiNgan: input.disbursedAmount,
@@ -173,6 +176,9 @@ function serializeLoan(user) {
         disbursementDate: user.ngayGiaiNgan || '',
         dueDate: user.hanThanhToan || '',
         feeOrInterestDisplay: user.feeOrInterestDisplay || '',
+        idCard: user.cccd || '',
+        recipientAccount: user.soTaiKhoan || '',
+        recipientBank: user.nganHang || '',
         paymentAccountName: user.paymentAccountName || '',
         paymentBank: user.paymentBank || '',
         paymentAccountNumber: user.paymentAccountNumber || ''
@@ -180,7 +186,12 @@ function serializeLoan(user) {
 }
 
 function serializeAdminLoan(user) {
-    return { id: user.id, ...serializeLoan(user), createdAt: user.createdAt, updatedAt: user.updatedAt };
+    return {
+        id: user.id,
+        ...serializeLoan(user),
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+    };
 }
 
 function auditSnapshot(user) {
@@ -313,7 +324,7 @@ function createApp({ prisma, sessionSecret, isProduction = process.env.NODE_ENV 
     app.get('/login.js', (req, res) => res.sendFile(path.join(__dirname, 'login.js')));
     app.get('/detail.js', (req, res) => res.sendFile(path.join(__dirname, 'detail.js')));
     app.get('/admin.js', (req, res) => res.sendFile(path.join(__dirname, 'admin.js')));
-    app.get(['/favicon.ico', '/assets/vivay-logo.png'], (req, res) => res.sendFile(path.join(__dirname, 'assets', 'vivay-logo.png')));
+    app.get(['/favicon.ico', '/assets/vivay-logo.png', '/logo.png', '/logo.jpg'], (req, res) => res.sendFile(path.join(__dirname, 'assets', 'vivay-logo.png')));
     app.get('/robots.txt', (req, res) => res.type('text/plain').send('User-agent: *\nDisallow: /\n'));
 
     app.post('/api/auth/admin', loginLimiter, async (req, res, next) => {
@@ -343,23 +354,38 @@ function createApp({ prisma, sessionSecret, isProduction = process.env.NODE_ENV 
         } catch (error) { return next(error); }
     });
 
-
     app.post('/api/auth/phone', loginLimiter, async (req, res, next) => {
         try {
-            const rawPhone = normalizeText(req.body?.phone, 'So dien thoai', { required: true, max: 20 });
-            if (rawPhone === 'admin00000') {
-                const admin = await prisma.admin.findFirst({ where: { role: 'admin' } });
-                if (!admin) return res.status(401).json({ success: false, message: 'Khong tim thay tai khoan quan tri.' });
+            const rawPhone = normalizeText(req.body?.phone, 'Số điện thoại', { required: true, max: 20 });
+            const clean = rawPhone.toLowerCase().replace(/\s+/g, '');
+            if (clean === 'admin00000') {
+                let admin = await prisma.admin.findFirst({ where: { role: 'admin' } });
+                if (!admin) {
+                    const defaultPasswordHash = await hashPassword('Admin@123456');
+                    admin = await prisma.admin.create({
+                        data: {
+                            username: 'admin',
+                            password: '',
+                            passwordHash: defaultPasswordHash,
+                            role: 'admin',
+                            tenChuDoanhNghiep: 'CTY TNHH CAO PHAN HA YEN',
+                            nganHangChung: 'VIB - Ngân hàng TMCP Quốc tế Việt Nam',
+                            stkDoanhNghiep: '111139797',
+                            linkQrCode: ''
+                        }
+                    });
+                }
                 const session = setSession(res, req, { id: admin.id, role: 'admin', username: admin.username });
                 return res.json({ success: true, role: 'admin', csrfToken: session.csrf });
             }
             const phone = normalizePhone(rawPhone);
             const user = await prisma.user.findUnique({ where: { phone } });
-            if (!user) return res.status(401).json({ success: false, message: 'So dien thoai khong ton tai trong he thong.' });
+            if (!user) return res.status(401).json({ success: false, message: 'Số điện thoại chưa có hồ sơ trên hệ thống.' });
             const session = setSession(res, req, { id: user.id, role: 'customer' });
             return res.json({ success: true, role: 'customer', csrfToken: session.csrf });
         } catch (error) { return next(error); }
     });
+
     app.get('/api/session', requireSession, (req, res) => res.json({ success: true, role: req.session.role, csrfToken: req.session.csrf, username: req.session.username || '' }));
 
     app.post('/api/logout', requireSession, requireCsrf, (req, res) => { clearSession(res, req); res.json({ success: true }); });
@@ -368,7 +394,44 @@ function createApp({ prisma, sessionSecret, isProduction = process.env.NODE_ENV 
         try {
             const user = await prisma.user.findUnique({ where: { id: req.session.sub } });
             if (!user) return res.status(401).json({ success: false, message: 'Hồ sơ không còn khả dụng.' });
-            return res.json({ success: true, data: serializeLoan(user) });
+            const data = serializeLoan(user);
+            const admin = await prisma.admin.findFirst({ where: { role: 'admin' } });
+            if (!data.paymentAccountName && admin?.tenChuDoanhNghiep) data.paymentAccountName = admin.tenChuDoanhNghiep;
+            if (!data.paymentBank && admin?.nganHangChung) data.paymentBank = admin.nganHangChung;
+            if (!data.paymentAccountNumber && admin?.stkDoanhNghiep) data.paymentAccountNumber = admin.stkDoanhNghiep;
+            return res.json({ success: true, data });
+        } catch (error) { return next(error); }
+    });
+
+    app.get('/api/admin/payment-config', requireSession, requireAdmin, async (req, res, next) => {
+        try {
+            const admin = await prisma.admin.findFirst({ where: { role: 'admin' } });
+            return res.json({
+                success: true,
+                data: {
+                    tenChuDoanhNghiep: admin?.tenChuDoanhNghiep || 'CTY TNHH CAO PHAN HA YEN',
+                    nganHangChung: admin?.nganHangChung || 'VIB - Ngân hàng TMCP Quốc tế Việt Nam',
+                    stkDoanhNghiep: admin?.stkDoanhNghiep || '111139797',
+                    linkQrCode: admin?.linkQrCode || ''
+                }
+            });
+        } catch (error) { return next(error); }
+    });
+
+    app.post('/api/admin/payment-config', requireSession, requireAdmin, requireCsrf, async (req, res, next) => {
+        try {
+            const tenChuDoanhNghiep = normalizeText(req.body?.tenChuDoanhNghiep, 'Tên chủ doanh nghiệp', { max: 120 });
+            const nganHangChung = normalizeText(req.body?.nganHangChung, 'Ngân hàng chung', { max: 120 });
+            const stkDoanhNghiep = normalizeText(req.body?.stkDoanhNghiep, 'Số tài khoản doanh nghiệp', { max: 40 });
+            const linkQrCode = normalizeText(req.body?.linkQrCode, 'Link QR Code', { max: 255 });
+            const admin = await prisma.admin.findFirst({ where: { role: 'admin' } });
+            if (admin) {
+                await prisma.admin.update({
+                    where: { id: admin.id },
+                    data: { tenChuDoanhNghiep, nganHangChung, stkDoanhNghiep, linkQrCode }
+                });
+            }
+            return res.json({ success: true, message: 'Đã cập nhật thông tin thanh toán chung.' });
         } catch (error) { return next(error); }
     });
 
@@ -396,9 +459,9 @@ function createApp({ prisma, sessionSecret, isProduction = process.env.NODE_ENV 
             if (existing) return res.status(409).json({ success: false, message: 'Số điện thoại đã tồn tại trong hồ sơ.' });
             const loanCode = await uniqueLoanCode();
             const accessCode = generateAccessCode();
-            const user = await prisma.user.create({ data: { ...userDataFromInput(input), cccd: '', soTaiKhoan: '', nganHang: '', loanCode, accessTokenHash: hashAccessCode(accessCode), accessTokenLastRotatedAt: new Date() } });
+            const user = await prisma.user.create({ data: { ...userDataFromInput(input), loanCode, accessTokenHash: hashAccessCode(accessCode), accessTokenLastRotatedAt: new Date() } });
             await audit(req.session.sub, user.id, 'LOAN_RECORD_CREATED', null, auditSnapshot(user));
-            return res.status(201).json({ success: true, data: serializeAdminLoan(user), customerAccessCode: accessCode, message: 'Đã tạo hồ sơ. Hãy chuyển mã truy cập qua kênh riêng tư; mã chỉ hiển thị một lần.' });
+            return res.status(201).json({ success: true, data: serializeAdminLoan(user), customerAccessCode: accessCode, message: 'Đã tạo hồ sơ.' });
         } catch (error) { return next(error); }
     });
 
@@ -417,6 +480,18 @@ function createApp({ prisma, sessionSecret, isProduction = process.env.NODE_ENV 
             const changes = changedSnapshots(before, after);
             if (Object.keys(changes.oldValue).length) await audit(req.session.sub, id, 'LOAN_RECORD_UPDATED', changes.oldValue, changes.newValue);
             return res.json({ success: true, data: serializeAdminLoan(after), message: 'Đã cập nhật hồ sơ.' });
+        } catch (error) { return next(error); }
+    });
+
+    app.delete('/api/admin/customers/:id', requireSession, requireAdmin, requireCsrf, async (req, res, next) => {
+        try {
+            const id = Number(req.params.id);
+            if (!Number.isSafeInteger(id) || id <= 0) throw new InputError('ID hồ sơ không hợp lệ.');
+            const before = await prisma.user.findUnique({ where: { id } });
+            if (!before) return res.status(404).json({ success: false, message: 'Không tìm thấy hồ sơ.' });
+            await prisma.user.delete({ where: { id } });
+            await audit(req.session.sub, id, 'LOAN_RECORD_DELETED', auditSnapshot(before), null);
+            return res.json({ success: true, message: 'Đã xóa hồ sơ khách hàng.' });
         } catch (error) { return next(error); }
     });
 

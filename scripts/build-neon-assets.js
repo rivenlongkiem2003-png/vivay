@@ -15,6 +15,7 @@ const assets = {
     '/detail.js': ['detail.js', 'text/javascript; charset=utf-8'],
     '/admin.js': ['admin.js', 'text/javascript; charset=utf-8'],
     '/assets/vivay-logo.png': ['assets/vivay-logo.png', 'image/png'],
+    '/logo.png': ['logo.png', 'image/png'],
     '/favicon.ico': ['assets/vivay-logo.png', 'image/png']
 };
 

@@ -4,24 +4,693 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta name="description" content="VÍ VAY — quản lý hồ sơ khoản vay.">
-  <meta property="og:title" content="VÍ VAY | Quản trị hồ sơ">
-  <meta property="og:description" content="Khu vực quản trị hạn chế.">
-  <meta property="og:image" content="/assets/vivay-logo.png">
-  <meta name="theme-color" content="#C68A12">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/admin.css">
-  <title>VÍ VAY | Quản trị hồ sơ</title>
+  <title>Quản Lý Hệ Thống - VÍ VAY</title>
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="admin.css">
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background-color: #fdfdfd;
+  color: #92400e;
+  min-height: 100vh;
+}
+
+/* Navbar */
+.admin-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 36px;
+  background: #ffffff;
+  border-bottom: 2px solid #facc15;
+  box-shadow: 0 2px 10px rgba(212, 160, 23, 0.1);
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.brand-names {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #b45309;
+  letter-spacing: 0.8px;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: #ca8a04;
+  font-weight: 600;
+}
+
+.btn-logout {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #b45309;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+/* Main */
+.admin-main {
+  max-width: 1320px;
+  margin: 28px auto;
+  padding: 0 28px;
+}
+
+/* Common Payment Banner */
+.common-payment-banner {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-radius: 16px;
+  padding: 22px 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.25);
+}
+
+.banner-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.banner-icon svg {
+  width: 36px;
+  height: 36px;
+  fill: #ffffff;
+}
+
+.banner-text h2 {
+  font-size: 19px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.banner-text p {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.btn-edit-common {
+  background: #ffffff;
+  border: none;
+  color: #b45309;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.2s;
+}
+
+.btn-edit-common svg {
+  width: 14px;
+  height: 14px;
+  fill: #b45309;
+}
+
+.btn-edit-common:hover {
+  background: #fffbeb;
+  color: #78350f;
+}
+
+/* 3 Stat Cards */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1.5px solid #fde047;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 15px rgba(202, 138, 4, 0.08);
+}
+
+.stat-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-icon-wrap svg {
+  width: 26px;
+  height: 26px;
+}
+
+.user-bg {
+  background: #fef3c7;
+  fill: #d97706;
+}
+
+.principal-bg {
+  background: #ecfdf5;
+  fill: #059669;
+}
+
+.due-bg {
+  background: #fff1f2;
+  fill: #e11d48;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #ca8a04;
+  margin-bottom: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-val {
+  font-size: 24px;
+  font-weight: 900;
+  color: #92400e;
+}
+
+/* Table Section */
+.table-section {
+  background: #ffffff;
+  border: 1.5px solid #fde047;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(202, 138, 4, 0.08);
+}
+
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.table-title {
+  font-size: 19px;
+  font-weight: 900;
+  color: #92400e;
+}
+
+.btn-create-customer {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
+  transition: opacity 0.2s;
+}
+
+.btn-create-customer svg {
+  width: 14px;
+  height: 14px;
+  fill: #ffffff;
+}
+
+.btn-create-customer:hover {
+  opacity: 0.95;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+th {
+  background: #fffbeb;
+  padding: 14px 12px;
+  color: #b45309;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #fde047;
+}
+
+td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #fef3c7;
+  color: #78350f;
+  white-space: nowrap;
+}
+
+.col-disburse {
+  color: #d97706 !important;
+}
+
+.cell-disburse {
+  color: #d97706;
+  font-weight: 800;
+}
+
+.phone-chip {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.bold-white {
+  font-weight: 800;
+  color: #92400e;
+}
+
+.gold-amount {
+  color: #d97706;
+  font-weight: 900;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-row-action {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #b45309;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.btn-row-action svg {
+  width: 14px;
+  height: 14px;
+  fill: #b45309;
+}
+
+.btn-row-action.edit:hover {
+  background: #f59e0b;
+}
+
+.btn-row-action.edit:hover svg {
+  fill: #ffffff;
+}
+
+.btn-row-action.delete:hover {
+  background: #ef4444;
+}
+
+.btn-row-action.delete:hover svg {
+  fill: #ffffff;
+}
+
+/* Modals */
+.app-dialog {
+  border: none;
+  background: transparent;
+  padding: 16px;
+  max-width: 660px;
+  width: 100%;
+  margin: auto;
+}
+
+.app-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.dialog-content {
+  background: #ffffff;
+  border: 2px solid #facc15;
+  border-radius: 18px;
+  padding: 24px;
+  color: #78350f;
+  box-shadow: 0 10px 40px rgba(184, 134, 11, 0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #fef3c7;
+  padding-bottom: 12px;
+}
+
+.dialog-header h3 {
+  font-size: 19px;
+  font-weight: 900;
+  color: #92400e;
+}
+
+.btn-dialog-close {
+  background: none;
+  border: none;
+  color: #b45309;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.dialog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-item.form-full {
+  margin-bottom: 16px;
+}
+
+.form-item label {
+  font-size: 12px;
+  color: #b45309;
+  font-weight: 700;
+}
+
+.highlight-item label {
+  color: #d97706 !important;
+}
+
+.form-item input, .form-item select {
+  background: #fffdf5;
+  border: 1px solid #fde047;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #92400e;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+}
+
+.form-item input:focus, .form-item select:focus {
+  border-color: #d97706;
+  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.15);
+}
+
+.dialog-feedback {
+  font-size: 13px;
+  margin-bottom: 12px;
+  min-height: 1.2em;
+  color: #ef4444;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-action-cancel {
+  background: #f1f5f9;
+  border: none;
+  color: #64748b;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-action-save {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: none;
+  color: #ffffff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+}
+  </style>
 </head>
 <body>
-  <main class="admin-shell">
-    <header class="admin-header"><a class="brand-lockup" href="/" aria-label="VÍ VAY trang chủ"><img src="/assets/vivay-logo.png" alt="Logo VÍ VAY"><span><strong>VÍ VAY</strong><small>Quản lý hồ sơ</small></span></a><button id="logout-button" class="button button-quiet" type="button">Đăng xuất</button></header>
-    <section class="admin-intro"><div><p class="eyebrow">Khu vực quản trị</p><h1>Hồ sơ khoản vay</h1><p>Nhập dữ liệu được chủ dự án phê duyệt. Mọi thay đổi quan trọng đều được ghi audit log đã che dữ liệu nhạy cảm.</p></div><button id="new-record-button" class="button button-primary" type="button">Tạo hồ sơ</button></section>
-    <section class="summary-grid" aria-label="Tổng quan"><article><span>Hồ sơ đang quản lý</span><strong id="record-count">0</strong></article><article><span>Tổng giải ngân (dữ liệu nhập)</span><strong id="total-disbursed">0 đ</strong></article><article><span>Tổng cần thanh toán (dữ liệu nhập)</span><strong id="total-payment">0 đ</strong></article></section>
-    <section class="records-panel" aria-labelledby="records-title"><div class="panel-heading"><div><p class="eyebrow">Danh sách</p><h2 id="records-title">Hồ sơ</h2></div><p id="load-status" role="status" aria-live="polite"></p></div><div class="table-wrap"><table><thead><tr><th>Mã khoản vay</th><th>Khách hàng</th><th>Trạng thái</th><th>Cần thanh toán</th><th>Ngày trả</th><th><span class="sr-only">Thao tác</span></th></tr></thead><tbody id="records-body"></tbody></table></div></section>
+  <!-- Navbar -->
+  <header class="admin-navbar">
+    <div class="brand-group">
+      <img src="logo.png" alt="Logo" class="admin-logo">
+      <div class="brand-names">
+        <span class="brand-title">VÍ VAY</span>
+        <span class="brand-subtitle">Quản trị hệ thống</span>
+      </div>
+    </div>
+    <button type="button" class="btn-logout" id="logoutBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 0 1 2 2v2h-2V4H5v16h9v-2h2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9z"/></svg>
+      Đăng xuất
+    </button>
+  </header>
+
+  <main class="admin-main">
+    <!-- Thẻ thông tin thanh toán chung -->
+    <section class="common-payment-banner">
+      <div class="banner-left">
+        <div class="banner-icon">
+          <svg viewBox="0 0 24 24"><path d="M11.5 1L2 6v2h19V6m-17 4v7h3v-7m4 0v7h3v-7m4 0v7h3v-7M2 19v2h19v-2H2z"/></svg>
+        </div>
+        <div class="banner-text">
+          <h2>Thông tin thanh toán chung</h2>
+          <p>Quản lý tài khoản & Mã QR doanh nghiệp</p>
+        </div>
+      </div>
+      <button type="button" class="btn-edit-common" id="editPaymentBtn">
+        <svg viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+        Chỉnh sửa
+      </button>
+    </section>
+
+    <!-- 3 Thẻ Thống Kê -->
+    <section class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon-wrap user-bg">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Tổng khách hàng</span>
+          <strong class="stat-val" id="statCustomers">0</strong>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap principal-bg">
+          <svg viewBox="0 0 24 24"><path d="M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2m7 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m-6 2v4h2v-4H6m10 0v4h2v-4h-2z"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Tổng tiền gốc</span>
+          <strong class="stat-val" id="statPrincipal">0 đ</strong>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon-wrap due-bg">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2m0 14H4v-6h16v6m0-10H4V6h16v2z"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Tổng phải thanh toán</span>
+          <strong class="stat-val" id="statDue">0 đ</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bảng danh sách khách hàng -->
+    <section class="table-section">
+      <div class="table-toolbar">
+        <h3 class="table-title">Danh sách khách hàng</h3>
+        <button type="button" class="btn-create-customer" id="newRecordBtn">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Thêm khách hàng
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>TÊN KHÁCH HÀNG</th>
+              <th>SỐ ĐIỆN THOẠI</th>
+              <th>CMND/CCCD</th>
+              <!-- Ô THÔNG TIN MỚI: NGÀY GIẢI NGÂN (ẢNH 2) -->
+              <th class="col-disburse">NGÀY GIẢI NGÂN</th>
+              <th>NGÀY THANH TOÁN ĐÚNG HẠN</th>
+              <th>SỐ TIỀN CẦN THANH TOÁN</th>
+              <th>SỐ TIỀN GIẢI NGÂN</th>
+              <th>SỐ TK NGƯỜI NHẬN</th>
+              <th>NGÂN HÀNG THỤ HƯỞNG</th>
+              <th>THAO TÁC</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody">
+            <!-- Đổ dữ liệu từ admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
   </main>
 
-  <dialog id="record-dialog" class="record-dialog" aria-labelledby="dialog-title"><form id="record-form" method="dialog"><header class="dialog-header"><div><p class="eyebrow">Hồ sơ khoản vay</p><h2 id="dialog-title">Tạo hồ sơ</h2></div><button id="close-dialog-button" class="close-button" type="button" aria-label="Đóng">×</button></header><p class="dialog-note">Mã khoản vay được tự sinh và không thể chỉnh sửa. Không nhập CCCD, OTP, PIN hoặc mật khẩu ngân hàng.</p><input id="record-id" name="id" type="hidden"><div class="form-grid"><label>Mã khoản vay<input id="record-loan-code" name="loanCode" readonly aria-readonly="true" value="Sẽ tự sinh sau khi lưu"></label><label>Họ tên<input id="record-customer-name" name="customerName" maxlength="120" required></label><label>Số điện thoại<input id="record-customer-phone" name="customerPhone" inputmode="tel" maxlength="20" required></label><label>Trạng thái khoản vay<input id="record-loan-status" name="loanStatus" maxlength="80" placeholder="Ví dụ: Đang xử lý" required></label><label>Số tiền cần thanh toán<input id="record-loan-amount" name="loanAmount" type="number" min="0" step="1" inputmode="numeric" required></label><label>Số tiền giải ngân<input id="record-disbursed-amount" name="disbursedAmount" type="number" min="0" step="1" inputmode="numeric" required></label><label>Ngày giải ngân<input id="record-disbursement-date" name="disbursementDate" type="date"></label><label>Ngày trả<input id="record-due-date" name="dueDate" type="date"></label><label class="form-span-2">Phí/lãi hiển thị<input id="record-fee-interest" name="feeOrInterestDisplay" maxlength="120" placeholder="Ví dụ: 2,00%/tháng — theo nội dung đã duyệt"></label><label>Tên chủ tài khoản thanh toán<input id="record-payment-owner" name="paymentAccountName" maxlength="120"></label><label>Ngân hàng thanh toán<input id="record-payment-bank" name="paymentBank" maxlength="120"></label><label class="form-span-2">Số tài khoản thanh toán<input id="record-payment-account" name="paymentAccountNumber" inputmode="numeric" maxlength="40"></label></div><div class="dialog-actions"><button id="rotate-access-button" class="button button-secondary" type="button" hidden>Tạo mã truy cập mới</button><span class="action-spacer"></span><button id="cancel-dialog-button" class="button button-quiet" type="button">Hủy</button><button class="button button-primary" type="submit">Lưu hồ sơ</button></div><p id="dialog-status" class="dialog-status" role="status" aria-live="polite"></p><section id="access-code-panel" class="access-code-panel" hidden><h3>Mã truy cập khách hàng</h3><p>Mã này chỉ hiển thị một lần. Chuyển qua kênh riêng tư, không gửi trong URL.</p><code id="access-code-value"></code><button id="copy-access-button" class="button button-secondary" type="button">Sao chép mã</button></section></form></dialog>
-  <script src="/admin.js" defer></script>
+  <!-- MODAL THÊM / SỬA KHÁCH HÀNG (CÓ Ô NGÀY GIẢI NGÂN) -->
+  <dialog id="customerDialog" class="app-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3 id="dialogTitle">Thêm khách hàng</h3>
+        <button type="button" class="btn-dialog-close" id="closeDialogBtn">&times;</button>
+      </div>
+      <form id="customerForm">
+        <input type="hidden" id="fieldId" name="id">
+        <div class="dialog-grid">
+          <div class="form-item">
+            <label for="fieldName">Tên khách hàng (*)</label>
+            <input type="text" id="fieldName" name="customerName" required placeholder="Ví dụ: NGUYỄN HOÀNG NHI">
+          </div>
+          <div class="form-item">
+            <label for="fieldPhone">Số điện thoại (*)</label>
+            <input type="text" id="fieldPhone" name="customerPhone" required placeholder="Ví dụ: 0357099485">
+          </div>
+          <div class="form-item">
+            <label for="fieldIdCard">CMND/CCCD</label>
+            <input type="text" id="fieldIdCard" name="idCard" placeholder="Ví dụ: 727555555555">
+          </div>
+          <!-- Ô THÔNG TIN MỚI: NGÀY GIẢI NGÂN -->
+          <div class="form-item highlight-item">
+            <label for="fieldDisbursedDate">Ngày giải ngân (*)</label>
+            <input type="text" id="fieldDisbursedDate" name="disbursementDate" required placeholder="Ví dụ: 17/7/2026 hoặc YYYY-MM-DD">
+          </div>
+          <div class="form-item">
+            <label for="fieldDueDate">Ngày thanh toán đúng hạn (Ngày trả) (*)</label>
+            <input type="text" id="fieldDueDate" name="dueDate" required placeholder="Ví dụ: 26/08/2026 hoặc YYYY-MM-DD">
+          </div>
+          <div class="form-item">
+            <label for="fieldLoanAmount">Số tiền cần thanh toán (*)</label>
+            <input type="text" id="fieldLoanAmount" name="loanAmount" required placeholder="Ví dụ: 5000000">
+          </div>
+          <div class="form-item">
+            <label for="fieldDisbursedAmount">Số tiền giải ngân (*)</label>
+            <input type="text" id="fieldDisbursedAmount" name="disbursedAmount" required placeholder="Ví dụ: 1000000">
+          </div>
+          <div class="form-item">
+            <label for="fieldFee">Phí / Lãi suất hiển thị</label>
+            <input type="text" id="fieldFee" name="feeOrInterestDisplay" placeholder="Ví dụ: 22.00% / 25.00%">
+          </div>
+          <div class="form-item">
+            <label for="fieldStatus">Trạng thái khoản vay</label>
+            <select id="fieldStatus" name="loanStatus">
+              <option value="CHƯA THANH TOÁN">CHƯA THANH TOÁN</option>
+              <option value="ĐÃ THANH TOÁN">ĐÃ THANH TOÁN</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label for="fieldRecipientAccount">Số TK người nhận (Của khách)</label>
+            <input type="text" id="fieldRecipientAccount" name="recipientAccount" placeholder="Ví dụ: 727888888888">
+          </div>
+          <div class="form-item">
+            <label for="fieldRecipientBank">Ngân hàng thụ hưởng (Của khách)</label>
+            <input type="text" id="fieldRecipientBank" name="recipientBank" placeholder="Ví dụ: Techcombank">
+          </div>
+        </div>
+        <div id="dialogFeedback" class="dialog-feedback"></div>
+        <div class="dialog-actions">
+          <button type="button" class="btn-action-cancel" id="cancelDialogBtn">Hủy</button>
+          <button type="submit" class="btn-action-save" id="saveRecordBtn">Lưu thông tin</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- MODAL SỬA THÔNG TIN THANH TOÁN CHUNG DOANH NGHIỆP -->
+  <dialog id="paymentDialog" class="app-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>Cấu hình tài khoản thanh toán chung</h3>
+        <button type="button" class="btn-dialog-close" id="closePaymentBtn">&times;</button>
+      </div>
+      <form id="paymentForm">
+        <div class="form-item form-full">
+          <label for="cfgOwner">Tên doanh nghiệp / Chủ tài khoản</label>
+          <input type="text" id="cfgOwner" required placeholder="Ví dụ: CTY TNHH CAO PHAN HA YEN">
+        </div>
+        <div class="form-item form-full">
+          <label for="cfgBank">Ngân hàng thụ hưởng</label>
+          <input type="text" id="cfgBank" required placeholder="Ví dụ: VIB - Ngân hàng TMCP Quốc tế Việt Nam">
+        </div>
+        <div class="form-item form-full">
+          <label for="cfgAccount">Số tài khoản nhận tiền</label>
+          <input type="text" id="cfgAccount" required placeholder="Ví dụ: 111139797">
+        </div>
+        <div id="paymentFeedback" class="dialog-feedback"></div>
+        <div class="dialog-actions">
+          <button type="button" class="btn-action-cancel" id="cancelPaymentBtn">Hủy</button>
+          <button type="submit" class="btn-action-save">Lưu cấu hình</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="admin.js"></script>
 </body>
 </html>

@@ -1,27 +1,332 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta name="description" content="VÍ VAY — thông tin hồ sơ khoản vay được bảo vệ.">
-  <meta property="og:title" content="VÍ VAY | Hồ sơ khoản vay">
-  <meta property="og:description" content="Trang hồ sơ có kiểm soát truy cập.">
-  <meta property="og:image" content="/assets/vivay-logo.png">
-  <meta name="theme-color" content="#C68A12">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/detail.css">
-  <title>VÍ VAY | Hồ sơ khoản vay</title>
+  <title>VÍ VAY | Chi Tiết Khoản Vay</title>
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="detail.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-color: #ffffff;
+      color: #b45309;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 16px 12px;
+    }
+    .user-shell {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px 20px 28px 20px;
+      box-shadow: 0 10px 35px rgba(184, 134, 11, 0.15);
+      border: 1.5px solid #facc15;
+    }
+    .user-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      background: #fffbeb;
+      border: 2px solid #ca8a04;
+      color: #b45309;
+      font-size: 22px;
+      font-weight: 900;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(202, 138, 4, 0.2);
+    }
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+    .user-name {
+      font-size: 19px;
+      font-weight: 900;
+      color: #92400e;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+    .user-phone {
+      font-size: 13px;
+      color: #b45309;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-badge {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+      padding: 6px 12px;
+      border-radius: 18px;
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .status-badge.paid {
+      background: #f0fdf4;
+      color: #16a34a;
+      border: 1px solid #86efac;
+    }
+    .btn-close {
+      background: #fffbeb;
+      color: #b45309;
+      border: 1px solid #fde68a;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .btn-close:hover {
+      background: #fef3c7;
+      color: #78350f;
+    }
+    .loan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .grid-card {
+      background: #fffdf5;
+      border: 1px solid #fde047;
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.08);
+    }
+    .card-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #ca8a04;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .card-value {
+      font-size: 16px;
+      font-weight: 900;
+      color: #92400e;
+      overflow-wrap: anywhere;
+    }
+    .card-value.gold {
+      color: #d97706;
+      font-size: 18px;
+    }
+    .payment-card {
+      background: #fffdf5;
+      border: 1.5px solid #facc15;
+      border-radius: 16px;
+      padding: 18px 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(202, 138, 4, 0.1);
+    }
+    .payment-title {
+      display: block;
+      font-size: 11px;
+      font-weight: 800;
+      color: #ca8a04;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .payment-subtitle {
+      font-size: 13px;
+      font-weight: 800;
+      color: #b45309;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .company-name {
+      font-size: 16px;
+      font-weight: 900;
+      color: #78350f;
+      margin-bottom: 4px;
+    }
+    .bank-name {
+      font-size: 13px;
+      color: #b45309;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .account-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .account-number {
+      font-size: 21px;
+      font-weight: 900;
+      color: #92400e;
+      letter-spacing: 1px;
+    }
+    .btn-copy {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #facc15;
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-copy:hover {
+      background: #fde047;
+      color: #78350f;
+    }
+    .btn-borrow-more {
+      width: 100%;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(217, 119, 6, 0.4);
+      transition: opacity 0.2s;
+    }
+    .btn-borrow-more:hover {
+      opacity: 0.95;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ca8a04;
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s ease;
+      z-index: 10000;
+    }
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
 </head>
 <body>
-  <main class="record-shell" aria-live="polite">
-    <header class="record-header"><a class="brand-lockup" href="/" aria-label="VÍ VAY trang chủ"><img src="/assets/vivay-logo.png" alt="Logo VÍ VAY"><span>VÍ VAY</span></a><button id="logout-button" class="button button-quiet" type="button">Đăng xuất</button></header>
-    <section class="profile-hero" aria-labelledby="customer-name"><div id="avatar" class="avatar" aria-hidden="true">V</div><div class="profile-copy"><p class="eyebrow">Hồ sơ khoản vay</p><h1 id="customer-name">Đang tải hồ sơ…</h1><p id="customer-phone" class="profile-phone"></p></div><span id="loan-status" class="status-chip">Đang tải</span></section>
-    <section class="loan-grid" aria-label="Thông tin khoản vay">
-      <article class="metric-card metric-card-highlight"><span>Số tiền cần thanh toán</span><strong id="loan-amount">—</strong></article><article class="metric-card"><span>Số tiền giải ngân</span><strong id="disbursed-amount">—</strong></article><article class="metric-card"><span>Ngày giải ngân</span><strong id="disbursement-date">—</strong></article><article class="metric-card"><span>Ngày trả</span><strong id="due-date">—</strong></article><article class="metric-card"><span>Phí/lãi</span><strong id="fee-interest">—</strong></article>
+  <div class="user-shell">
+    <!-- Header thông tin khách hàng -->
+    <header class="user-header">
+      <div class="user-profile">
+        <div class="user-avatar" id="avatarText">P</div>
+        <div class="user-details">
+          <h1 class="user-name" id="nameText">PHAN ANH VIỆT</h1>
+          <p class="user-phone" id="phoneText">0931982889</p>
+        </div>
+      </div>
+      <div class="user-actions">
+        <div class="status-badge" id="statusBadge">CHƯA THANH<br>TOÁN</div>
+        <button type="button" class="btn-close" id="logoutBtn" aria-label="Đóng">✕</button>
+      </div>
+    </header>
+
+    <!-- Lưới 8 Thẻ Thông Tin (ĐẦY ĐỦ 100% CÁC TRƯỜNG TỪ ADMIN) -->
+    <section class="loan-grid" aria-label="Chi tiết khoản vay">
+      <!-- 1. Cần thanh toán -->
+      <div class="grid-card">
+        <span class="card-label">CẦN THANH TOÁN</span>
+        <strong class="card-value gold" id="payAmount">2.150.000 đ</strong>
+      </div>
+      <!-- 2. Giải ngân -->
+      <div class="grid-card">
+        <span class="card-label">GIẢI NGÂN</span>
+        <strong class="card-value" id="disbursedAmount">1.120.000 đ</strong>
+      </div>
+      <!-- 3. Ngày giải ngân -->
+      <div class="grid-card">
+        <span class="card-label">NGÀY GIẢI NGÂN</span>
+        <strong class="card-value" id="disbursedDate">17/7/2026</strong>
+      </div>
+      <!-- 4. Ngày trả -->
+      <div class="grid-card">
+        <span class="card-label">NGÀY TRẢ</span>
+        <strong class="card-value" id="dueDate">23/7/2026</strong>
+      </div>
+      <!-- 5. Phí / Lãi suất -->
+      <div class="grid-card">
+        <span class="card-label">PHÍ / LÃI SUẤT</span>
+        <strong class="card-value" id="feeText">22.00% / 25.00%</strong>
+      </div>
+      <!-- 6. CMND/CCCD (BỔ SUNG THEO YÊU CẦU) -->
+      <div class="grid-card">
+        <span class="card-label">CMND / CCCD</span>
+        <strong class="card-value" id="idCardText">727555555555</strong>
+      </div>
+      <!-- 7. Số TK người nhận của khách (BỔ SUNG THEO YÊU CẦU) -->
+      <div class="grid-card">
+        <span class="card-label">SỐ TK NHẬN TIỀN</span>
+        <strong class="card-value" id="recipientAccountText">727888888888</strong>
+      </div>
+      <!-- 8. Ngân hàng nhận của khách (BỔ SUNG THEO YÊU CẦU) -->
+      <div class="grid-card">
+        <span class="card-label">NGÂN HÀNG THỤ HƯỞNG</span>
+        <strong class="card-value" id="recipientBankText">Techcombank</strong>
+      </div>
     </section>
-    <section class="payment-card" aria-labelledby="payment-title"><div class="section-heading"><p class="eyebrow">Thông tin do đơn vị vận hành cung cấp</p><h2 id="payment-title">Tài khoản thanh toán</h2></div><dl class="payment-list"><div><dt>Tên chủ tài khoản</dt><dd id="payment-owner">—</dd></div><div><dt>Ngân hàng</dt><dd id="payment-bank">—</dd></div><div class="account-row"><div><dt>Số tài khoản</dt><dd id="payment-account">—</dd></div><button id="copy-account" class="button button-secondary" type="button" disabled>Sao chép</button></div></dl><p class="payment-disclaimer">Chỉ thực hiện thanh toán sau khi tự xác minh hợp đồng, pháp nhân và thông tin thụ hưởng. Sao chép không xác nhận hay hoàn tất bất kỳ giao dịch nào.</p><p id="copy-feedback" class="copy-feedback" role="status" aria-live="polite"></p></section>
-  </main>
-  <script src="/detail.js" defer></script>
+
+    <!-- Khung Tài Khoản Thanh Toán Doanh Nghiệp (Để khách chuyển khoản trả nợ) -->
+    <section class="payment-card" aria-label="Tài khoản thanh toán">
+      <span class="payment-title">TÀI KHOẢN THANH TOÁN</span>
+      <h2 class="payment-subtitle">TÀI KHOẢN NHẬN</h2>
+      <div class="company-name" id="payOwner">CTY TNHH CAO PHAN HA YEN</div>
+      <div class="bank-name" id="payBank">VIB - Ngân hàng TMCP Quốc tế Việt Nam</div>
+      <div class="account-row">
+        <span class="account-number" id="payAccount">111139797</span>
+        <button type="button" class="btn-copy" id="copyBtn">Copy</button>
+      </div>
+    </section>
+
+    <!-- Nút Vay Thêm Ngay -->
+    <button type="button" class="btn-borrow-more" id="borrowMoreBtn">Vay thêm ngay</button>
+  </div>
+
+  <div id="toast" class="toast">Đã sao chép số tài khoản!</div>
+  <script src="detail.js"></script>
 </body>
 </html>
