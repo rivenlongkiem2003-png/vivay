@@ -7,25 +7,57 @@ datasource db {
 }
 
 model User {
-  id               Int      @id @default(autoincrement())
-  name             String
-  phone            String   @unique
-  cccd             String
-  hanThanhToan     String
-  tienCanThanhToan String
-  tienGiaiNgan     String
-  ngayGiaiNgan     String?
-  soTaiKhoan       String?
-  nganHang         String?
-  createdAt        DateTime @default(now())
+  id                       Int       @id @default(autoincrement())
+  name                     String
+  phone                    String    @unique
+  cccd                     String    @default("")
+  hanThanhToan             String
+  tienCanThanhToan         String
+  tienGiaiNgan             String
+  ngayGiaiNgan             String?
+  soTaiKhoan               String?
+  nganHang                 String?
+  loanCode                 String?   @unique
+  loanStatus               String    @default("Đang xử lý")
+  feeOrInterestDisplay     String?
+  paymentAccountName       String?
+  paymentBank              String?
+  paymentAccountNumber     String?
+  accessTokenHash          String?
+  accessTokenLastRotatedAt DateTime?
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+
+  auditLogs AuditLog[]
 }
 
 model Admin {
-  id                Int    @id @default(autoincrement())
-  username          String @unique
+  id                Int        @id @default(autoincrement())
+  username          String     @unique
   password          String
+  passwordHash      String?
+  role              String     @default("admin")
   stkDoanhNghiep    String
   nganHangChung     String
   tenChuDoanhNghiep String
   linkQrCode        String
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  auditLogs         AuditLog[]
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  actorId   Int
+  entityId  Int
+  action    String
+  oldValue  String?
+  newValue  String?
+  createdAt DateTime @default(now())
+
+  actor Admin @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  user  User  @relation(fields: [entityId], references: [id], onDelete: Restrict)
+
+  @@index([entityId, createdAt])
+  @@index([actorId, createdAt])
 }

@@ -1,4 +1,6 @@
 {
+  "name": "vivay-records",
+  "private": true,
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.8.0",
     "@prisma/adapter-pg": "^7.8.0",
@@ -11,6 +13,12 @@
   },
   "scripts": {
     "start": "node server.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "build": "npm run lint && prisma generate",
+    "lint": "node scripts/lint.js",
+    "test": "node --test test/**/*.test.js",
+    "test:api": "node --test test/api.integration.test.js",
+    "test:security": "node --test test/security.test.js",
+    "secret:scan": "node scripts/secret-scan.js"
   }
 }

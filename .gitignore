@@ -1,5 +1,14 @@
-node_modules
-# Keep environment variables out of version control
-.env
+node_modules/
+logs/
+uploads/
+backup*/
+.codex-backups/
+output/
+.env*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
 dev.db
-.git_moneyvay_backup
+.git_moneyvay_backup/
