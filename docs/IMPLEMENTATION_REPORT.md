@@ -74,7 +74,7 @@ Browser E2E/responsive test passed against a temporary fake-data server using th
 
 ## 10. GitHub commit
 
-Not created or pushed. No repository URL or GitHub authorization was supplied. Current working tree remains uncommitted so the owner can inspect the diff first.
+Created locally with message `feat: secure Vi Vay record management`. Not pushed: the previous Git remote embedded a personal access token, so it was replaced with the token-free repository URL and the exposed token must be revoked/rotated. Use a fresh owner-provided credential manager/SSH credential or short-lived token only after rotation and review.
 
 ## 11. Render deployment
 
