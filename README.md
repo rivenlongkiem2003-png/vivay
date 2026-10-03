@@ -15,3 +15,5 @@ Kiểm thử: `npm test`, `npm run lint`, `npm run secret:scan`, `npm run build`
 Production bị chặn ở cấp runtime cho đến khi `OWNER_PRODUCTION_APPROVED=true` và `PUBLIC_ORIGIN` là HTTPS. Chỉ đặt biến này sau khi chủ dự án hoàn tất [checklist triển khai pháp lý](docs/LEGAL_DEPLOYMENT_CHECKLIST.md), xác nhận bằng văn bản và có backup database đã kiểm chứng.
 
 Các giới hạn/rủi ro kỹ thuật và compliance hiện có trong [LEGAL_REVIEW.md](docs/LEGAL_REVIEW.md), [RISK_FINDINGS.md](docs/RISK_FINDINGS.md) và [IMPLEMENTATION_REPORT.md](docs/IMPLEMENTATION_REPORT.md).
+
+Hướng dẫn Render theo đúng cấu hình repository: [RENDER_DEPLOYMENT.md](docs/RENDER_DEPLOYMENT.md).

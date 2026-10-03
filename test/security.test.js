@@ -24,6 +24,9 @@ test('security headers are present and non-public source files are not served', 
     assert.equal(home.headers.get('x-content-type-options'), 'nosniff');
     assert.match(home.headers.get('permissions-policy'), /camera=\(\)/);
     assert.match(home.headers.get('x-robots-tag'), /noindex/);
+    const health = await fetch(`${service.baseUrl}/health`);
+    assert.equal(health.status, 200);
+    assert.deepEqual(await health.json(), { status: 'ok' });
     const source = await fetch(`${service.baseUrl}/server.js`);
     assert.equal(source.status, 404);
     const legacyConfig = await fetch(`${service.baseUrl}/api/config`);

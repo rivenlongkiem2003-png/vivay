@@ -12,7 +12,7 @@ The starting project was a Node.js/Express app using Prisma/PostgreSQL with root
 - Rebuilt public, customer record and admin interfaces: `index.html`, `detail.html`, `admin.html`, CSS/JS, `theme.css`.
 - New VÍ VAY logo asset: `assets/vivay-logo.png`.
 - Additive Prisma migration: `prisma/migrations/20261003000000_vivay_security_hardening/migration.sql`.
-- Security/test tooling: `.env.example`, `.gitignore`, `scripts/`, `test/`, `render.yaml`.
+- Security/test tooling: `.env.example`, `.gitignore`, `scripts/`, `test/`, `render.yaml`, `docs/RENDER_DEPLOYMENT.md`.
 - Governance documents in `docs/`.
 
 ## 3. DB changes
@@ -78,7 +78,7 @@ Created locally with message `feat: secure Vi Vay record management`. Not pushed
 
 ## 11. Render deployment
 
-Not deployed. `render.yaml` is prepared with production environment-variable configuration and `prisma migrate deploy`, but runtime refuses production unless `OWNER_PRODUCTION_APPROVED=true` and an HTTPS `PUBLIC_ORIGIN` is configured.
+Not deployed. `render.yaml` is prepared with a Singapore Node service, `/health` check, production environment-variable configuration, bounded database pool and `prisma migrate deploy`; runtime refuses production unless `OWNER_PRODUCTION_APPROVED=true` and an HTTPS origin is available (via `PUBLIC_ORIGIN` or Render's hostname).
 
 ## 12. Production URL
 

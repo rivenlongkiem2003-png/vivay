@@ -301,6 +301,7 @@ function createApp({ prisma, sessionSecret, isProduction = process.env.NODE_ENV 
 
     const loginLimiter = createRateLimiter({ max: rateLimit.loginMax || 8, windowMs: rateLimit.loginWindowMs || 15 * 60 * 1000 });
 
+    app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
     app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
     app.get('/index.html', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
     app.get('/detail.html', (req, res) => res.sendFile(path.join(__dirname, 'detail.html')));

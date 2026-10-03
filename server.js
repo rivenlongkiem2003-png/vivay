@@ -12,21 +12,28 @@ async function main() {
     if (!sessionSecret || sessionSecret.length < 32) throw new Error('SESSION_SECRET with at least 32 characters is required.');
 
     const isProduction = process.env.NODE_ENV === 'production';
+    const renderOrigin = process.env.RENDER_EXTERNAL_HOSTNAME ? `https://${process.env.RENDER_EXTERNAL_HOSTNAME}` : '';
+    const publicOrigin = process.env.PUBLIC_ORIGIN || renderOrigin;
     if (isProduction && process.env.OWNER_PRODUCTION_APPROVED !== 'true') {
         throw new Error('Production is blocked until the project owner records OWNER_PRODUCTION_APPROVED=true after completing the legal deployment checklist.');
     }
-    if (isProduction && !/^https:\/\/.+/.test(process.env.PUBLIC_ORIGIN || '')) {
-        throw new Error('PUBLIC_ORIGIN must be an HTTPS origin in production.');
+    if (isProduction && !/^https:\/\/.+/.test(publicOrigin)) {
+        throw new Error('PUBLIC_ORIGIN or RENDER_EXTERNAL_HOSTNAME must provide an HTTPS origin in production.');
     }
+    const configuredPoolSize = Number(process.env.DB_POOL_MAX || 5);
+    const poolSize = Number.isSafeInteger(configuredPoolSize) ? Math.min(20, Math.max(1, configuredPoolSize)) : 5;
     const pool = new Pool({
         connectionString: databaseUrl,
-        ssl: process.env.DATABASE_SSL === 'true' || isProduction ? { rejectUnauthorized: false } : false
+        ssl: process.env.DATABASE_SSL === 'true' || isProduction ? { rejectUnauthorized: false } : false,
+        max: poolSize,
+        connectionTimeoutMillis: 10_000,
+        idleTimeoutMillis: 30_000
     });
     const prisma = new PrismaClient({ adapter: new PrismaPg(pool) });
     await bootstrapAdmin(prisma);
     await backfillSecureLoanAccess(prisma);
 
-    const app = createApp({ prisma, sessionSecret, isProduction, publicOrigin: process.env.PUBLIC_ORIGIN });
+    const app = createApp({ prisma, sessionSecret, isProduction, publicOrigin });
     const port = Number(process.env.PORT || 3000);
     const server = app.listen(port, () => console.log(`VÍ VAY record service listening on port ${port}`));
 

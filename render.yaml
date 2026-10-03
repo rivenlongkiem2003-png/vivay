@@ -1,11 +1,14 @@
 services:
   - type: web
     name: vivay-records
-    env: node
+    runtime: node
+    region: singapore
     plan: free
     buildCommand: npm ci && npm run build
     preDeployCommand: npx prisma migrate deploy
     startCommand: npm start
+    healthCheckPath: /health
+    autoDeployTrigger: "off"
     envVars:
       - key: DATABASE_URL
         sync: false
@@ -23,3 +26,5 @@ services:
         sync: false
       - key: OWNER_PRODUCTION_APPROVED
         sync: false
+      - key: DB_POOL_MAX
+        value: "5"
