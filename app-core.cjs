@@ -432,9 +432,14 @@ function createApp({ prisma, sessionSecret, isProduction = process.env.NODE_ENV 
 async function bootstrapAdmin(prisma) {
     const username = process.env.BOOTSTRAP_ADMIN_USERNAME;
     const password = process.env.BOOTSTRAP_ADMIN_PASSWORD;
+    const resetExisting = process.env.BOOTSTRAP_ADMIN_RESET === 'true';
     if (!username || !password) return false;
     const existing = await prisma.admin.findUnique({ where: { username } });
-    if (existing) return false;
+    if (existing) {
+        if (!resetExisting) return false;
+        await prisma.admin.update({ where: { id: existing.id }, data: { password: '', passwordHash: await hashPassword(password) } });
+        return true;
+    }
     await prisma.admin.create({ data: { username, password: '', passwordHash: await hashPassword(password), role: 'admin', stkDoanhNghiep: '', nganHangChung: '', tenChuDoanhNghiep: '', linkQrCode: '' } });
     return true;
 }

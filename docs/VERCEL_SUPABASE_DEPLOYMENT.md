@@ -42,6 +42,7 @@ Không chạy `prisma migrate reset` trên project Supabase có dữ liệu.
 | `DB_POOL_MAX` | `3` |
 | `BOOTSTRAP_ADMIN_USERNAME` | Tài khoản admin khởi tạo một lần |
 | `BOOTSTRAP_ADMIN_PASSWORD` | Mật khẩu mạnh khởi tạo một lần |
+| `BOOTSTRAP_ADMIN_RESET` | `true` đúng một lần để đổi mật khẩu admin đã tồn tại, sau đó đặt lại `false` |
 | `OWNER_PRODUCTION_APPROVED` | `false` cho đến khi checklist pháp lý hoàn tất |
 | `PUBLIC_ORIGIN` | `https://vivay.vercel.app` khi domain này là domain production |
 
