@@ -1,4 +1,4 @@
-const { hashPassword } = require('../app');
+const { hashPassword } = require('../app-core.cjs');
 
 function clone(value) {
     return structuredClone(value);

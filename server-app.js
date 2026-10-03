@@ -3,7 +3,7 @@ require('dotenv').config();
 const { Pool } = require('pg');
 const { PrismaPg } = require('@prisma/adapter-pg');
 const { PrismaClient } = require('@prisma/client');
-const { backfillSecureLoanAccess, bootstrapAdmin, createApp } = require('./app');
+const { backfillSecureLoanAccess, bootstrapAdmin, createApp } = require('./app-core.cjs');
 
 async function createDatabaseApp({ serverless = false } = {}) {
     const databaseUrl = process.env.DATABASE_URL;

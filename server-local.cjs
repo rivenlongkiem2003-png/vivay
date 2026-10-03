@@ -1,4 +1,4 @@
-const { createDatabaseApp } = require('./server-app');
+const { createDatabaseApp } = require('./server-app.js');
 
 async function main() {
     const { app, prisma, pool } = await createDatabaseApp({ serverless: false });

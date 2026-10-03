@@ -4,7 +4,7 @@
   "functions": {
     "api/index.mjs": {
       "maxDuration": 30,
-      "includeFiles": "{app.js,server-app.js,index.html,detail.html,admin.html,*.css,login.js,detail.js,admin.js,assets/**}"
+      "includeFiles": "{app-core.cjs,server-app.js,index.html,detail.html,admin.html,*.css,login.js,detail.js,admin.js,assets/**}"
     }
   },
   "rewrites": [

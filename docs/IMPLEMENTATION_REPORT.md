@@ -8,7 +8,7 @@ The starting project was a Node.js/Express app using Prisma/PostgreSQL with root
 
 ## 2. Files changed
 
-- New server application boundary: `app.js`; minimal startup entry: `server.js`.
+- New server application boundary: `app-core.cjs`; minimal local startup entry: `server-local.cjs`.
 - Rebuilt public, customer record and admin interfaces: `index.html`, `detail.html`, `admin.html`, CSS/JS, `theme.css`.
 - New VÍ VAY logo asset: `assets/vivay-logo.png`.
 - Additive Prisma migration: `prisma/migrations/20261003000000_vivay_security_hardening/migration.sql`.
