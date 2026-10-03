@@ -31,7 +31,7 @@ The app listens on Render's `PORT`. On Render, it automatically uses `RENDER_EXT
 
    | Field | Value |
    | --- | --- |
-   | Name | `vivay-records` (or a unique approved name) |
+   | Name | `vivay` |
    | Region | Singapore |
    | Branch | `main` |
    | Build Command | `npm ci && npm run build` |

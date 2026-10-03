@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: vivay-records
+    name: vivay
     runtime: node
     region: singapore
     plan: free

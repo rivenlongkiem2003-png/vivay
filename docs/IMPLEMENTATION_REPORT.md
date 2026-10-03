@@ -74,7 +74,7 @@ Browser E2E/responsive test passed against a temporary fake-data server using th
 
 ## 10. GitHub commit
 
-Created locally with message `feat: secure Vi Vay record management`. Not pushed: the previous Git remote embedded a personal access token, so it was replaced with the token-free repository URL and the exposed token must be revoked/rotated. Use a fresh owner-provided credential manager/SSH credential or short-lived token only after rotation and review.
+Pushed to `https://github.com/huyng1801/vivay` on `main` with commits `393c494` (`feat: secure Vi Vay record management`), `2725820` (`docs: record release security gates`) and `e735b2d` (`chore: prepare Render deployment`). The previous remote was replaced with this token-free URL; the exposed historical token still must be revoked/rotated.
 
 ## 11. Render deployment
 
