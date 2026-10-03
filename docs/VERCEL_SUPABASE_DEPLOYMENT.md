@@ -27,7 +27,7 @@ Không chạy `prisma migrate reset` trên project Supabase có dữ liệu.
 
 1. Vào Vercel → **Add New Project** → import `y038910080827-commits/vivay`.
 2. Framework chọn **Other**, Build Command để `npm run build`, Output Directory để trống.
-3. Vercel sẽ nhận `vercel.json`, build root `index.js` thành Express Function và tự deploy mỗi lần push vào `main`.
+3. Vercel sẽ nhận `vercel.json`, dùng Framework Preset Express, build root `index.js` thành Express Function và tự deploy mỗi lần push vào `main`.
 
 ## 4. Environment Variables trên Vercel
 
@@ -43,7 +43,7 @@ Không chạy `prisma migrate reset` trên project Supabase có dữ liệu.
 | `BOOTSTRAP_ADMIN_USERNAME` | Tài khoản admin khởi tạo một lần |
 | `BOOTSTRAP_ADMIN_PASSWORD` | Mật khẩu mạnh khởi tạo một lần |
 | `OWNER_PRODUCTION_APPROVED` | `false` cho đến khi checklist pháp lý hoàn tất |
-| `PUBLIC_ORIGIN` | Để trống ở lần deploy đầu; điền HTTPS domain sau khi gắn custom domain |
+| `PUBLIC_ORIGIN` | `https://vivay.vercel.app` khi domain này là domain production |
 
 Không cần `SUPABASE_ANON_KEY` hoặc `SUPABASE_SERVICE_ROLE_KEY` cho backend này. Không đặt chúng trong `NEXT_PUBLIC_*` hay bất kỳ biến frontend nào.
 
