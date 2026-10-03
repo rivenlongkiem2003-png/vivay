@@ -56,4 +56,6 @@ Sau khi đủ biến môi trường, Vercel sẽ tự build từ commit trên Gi
 - Đăng nhập customer bằng loan code và access code được chuyển qua kênh riêng tư.
 - Kiểm tra log Vercel và Supabase trước khi mở public.
 
+Mỗi lần thay đổi Environment Variables trên Vercel, hãy tạo một deployment mới để Function nhận giá trị mới; không đưa các giá trị bí mật vào Git.
+
 Sau lần bootstrap admin thành công, xoá `BOOTSTRAP_ADMIN_USERNAME` và `BOOTSTRAP_ADMIN_PASSWORD` khỏi Vercel rồi redeploy. Giữ `OWNER_PRODUCTION_APPROVED=false` cho đến khi chủ dự án có phê duyệt bằng văn bản và hoàn tất checklist pháp lý.
