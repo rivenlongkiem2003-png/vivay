@@ -1,6 +1,6 @@
 const assert = require('assert/strict');
 const test = require('node:test');
-const { createApp, generateLoanCode, hashPassword, verifyPassword } = require('../app');
+const { createApp, generateLoanCode, hashPassword, verifyPassword } = require('../app-core.cjs');
 const { createFakePrisma, startApp } = require('./helpers');
 
 test('password hashing and generated loan codes have expected security properties', async () => {
@@ -27,7 +27,7 @@ test('security headers are present and non-public source files are not served', 
     const health = await fetch(`${service.baseUrl}/health`);
     assert.equal(health.status, 200);
     assert.deepEqual(await health.json(), { status: 'ok' });
-    const source = await fetch(`${service.baseUrl}/server.js`);
+    const source = await fetch(`${service.baseUrl}/server-local.cjs`);
     assert.equal(source.status, 404);
     const legacyConfig = await fetch(`${service.baseUrl}/api/config`);
     assert.equal(legacyConfig.status, 404);

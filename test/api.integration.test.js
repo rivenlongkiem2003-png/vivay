@@ -1,6 +1,6 @@
 const assert = require('assert/strict');
 const test = require('node:test');
-const { createApp } = require('../app');
+const { createApp } = require('../app-core.cjs');
 const { cookie, createFakePrisma, startApp } = require('./helpers');
 
 const secret = 'test-session-secret-that-is-longer-than-thirty-two-characters';

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "framework": "express",
+  "buildCommand": "npm run build",
+  "functions": {
+    "index.js": {
+      "maxDuration": 30,
+      "includeFiles": "{app-core.cjs,server-app.js,index.html,detail.html,admin.html,*.css,login.js,detail.js,admin.js,assets/**}"
+    }
+  }
+}
