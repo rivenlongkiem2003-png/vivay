@@ -1,0 +1,51 @@
+- main [ref=f5e2]:
+  - generic [ref=f5e3]:
+    - link "VÍ VAY trang chủ" [ref=f5e4] [cursor=pointer]:
+      - /url: /
+      - img "Logo VÍ VAY" [ref=f5e5]
+      - generic [ref=f5e6]:
+        - strong [ref=f5e7]: VÍ VAY
+        - generic [ref=f5e8]: Quản lý hồ sơ
+    - button "Đăng xuất" [ref=f5e9] [cursor=pointer]
+  - generic [ref=f5e10]:
+    - generic [ref=f5e11]:
+      - paragraph [ref=f5e12]: Khu vực quản trị
+      - heading "Hồ sơ khoản vay" [level=1] [ref=f5e13]
+      - paragraph [ref=f5e14]: Nhập dữ liệu được chủ dự án phê duyệt. Mọi thay đổi quan trọng đều được ghi audit log đã che dữ liệu nhạy cảm.
+    - button "Tạo hồ sơ" [ref=f5e15] [cursor=pointer]
+  - region "Tổng quan" [ref=f5e16]:
+    - article [ref=f5e17]:
+      - generic [ref=f5e18]: Hồ sơ đang quản lý
+      - strong [ref=f5e19]: "1"
+    - article [ref=f5e20]:
+      - generic [ref=f5e21]: Tổng giải ngân (dữ liệu nhập)
+      - strong [ref=f5e22]: 1.120.000 đ
+    - article [ref=f5e23]:
+      - generic [ref=f5e24]: Tổng cần thanh toán (dữ liệu nhập)
+      - strong [ref=f5e25]: 2.150.000 đ
+  - region [ref=f5e26]:
+    - generic [ref=f5e27]:
+      - generic [ref=f5e28]:
+        - paragraph [ref=f5e29]: Danh sách
+        - heading "Hồ sơ" [level=2] [ref=f5e30]
+      - status [ref=f5e31]: 1 hồ sơ
+    - table [ref=f5e33]:
+      - rowgroup [ref=f5e34]:
+        - row [ref=f5e35]:
+          - columnheader "Mã khoản vay" [ref=f5e36]
+          - columnheader "Khách hàng" [ref=f5e37]
+          - columnheader "Trạng thái" [ref=f5e38]
+          - columnheader "Cần thanh toán" [ref=f5e39]
+          - columnheader "Ngày trả" [ref=f5e40]
+          - columnheader "Thao tác" [ref=f5e41]
+      - rowgroup [ref=f5e43]:
+        - row [ref=f5e44]:
+          - cell "VV-20261003-3785AD2C9642A2166D776117" [ref=f5e45]
+          - cell "Khách hàng minh hoạ 090***000" [ref=f5e46]:
+            - generic [ref=f5e47]: Khách hàng minh hoạ
+            - generic [ref=f5e48]: 090***000
+          - cell "Hồ sơ đang quản lý" [ref=f5e49]
+          - cell "2.150.000 đ" [ref=f5e51]
+          - cell "2026-11-23" [ref=f5e52]
+          - cell [ref=f5e53]:
+            - button "Chỉnh sửa" [ref=f5e54] [cursor=pointer]

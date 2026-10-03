@@ -1,0 +1,51 @@
+- main [ref=f3e2]:
+  - generic [ref=f3e3]:
+    - link "VÍ VAY trang chủ" [ref=f3e4] [cursor=pointer]:
+      - /url: /
+      - img "Logo VÍ VAY" [ref=f3e5]
+      - generic [ref=f3e6]: VÍ VAY
+    - button "Đăng xuất" [ref=f3e7] [cursor=pointer]
+  - region [ref=f3e8]:
+    - generic [aria-hidden] [ref=f3e9]: K
+    - generic [ref=f3e10]:
+      - paragraph [ref=f3e11]: Hồ sơ khoản vay
+      - heading "Khách hàng minh hoạ" [level=1] [ref=f3e12]
+      - paragraph [ref=f3e13]: 090***000
+    - generic [ref=f3e14]: Hồ sơ đang quản lý
+  - region "Thông tin khoản vay" [ref=f3e15]:
+    - article [ref=f3e16]:
+      - generic [ref=f3e17]: Mã khoản vay
+      - strong [ref=f3e18]: VV-20261003-3785AD2C9642A2166D776117
+    - article [ref=f3e19]:
+      - generic [ref=f3e20]: Số tiền cần thanh toán
+      - strong [ref=f3e21]: 2.150.000 đ
+    - article [ref=f3e22]:
+      - generic [ref=f3e23]: Số tiền giải ngân
+      - strong [ref=f3e24]: 1.120.000 đ
+    - article [ref=f3e25]:
+      - generic [ref=f3e26]: Ngày giải ngân
+      - strong [ref=f3e27]: 17/10/2026
+    - article [ref=f3e28]:
+      - generic [ref=f3e29]: Ngày trả
+      - strong [ref=f3e30]: 23/11/2026
+    - article [ref=f3e31]:
+      - generic [ref=f3e32]: Phí/lãi
+      - strong [ref=f3e33]: Minh hoạ — theo nội dung đã duyệt
+  - region [ref=f3e34]:
+    - generic [ref=f3e35]:
+      - paragraph [ref=f3e36]: Thông tin do đơn vị vận hành cung cấp
+      - heading "Tài khoản thanh toán" [level=2] [ref=f3e37]
+    - generic [ref=f3e38]:
+      - generic [ref=f3e39]:
+        - term [ref=f3e40]: Tên chủ tài khoản
+        - definition [ref=f3e41]: CÔNG TY MINH HOẠ
+      - generic [ref=f3e42]:
+        - term [ref=f3e43]: Ngân hàng
+        - definition [ref=f3e44]: Ngân hàng minh hoạ
+      - generic [ref=f3e45]:
+        - generic [ref=f3e46]:
+          - term [ref=f3e47]: Số tài khoản
+          - definition [ref=f3e48]: "111139797"
+        - button "Sao chép" [ref=f3e49] [cursor=pointer]
+    - paragraph [ref=f3e50]: Chỉ thực hiện thanh toán sau khi tự xác minh hợp đồng, pháp nhân và thông tin thụ hưởng. Sao chép không xác nhận hay hoàn tất bất kỳ giao dịch nào.
+    - status [ref=f3e51]

@@ -1,0 +1,24 @@
+- generic [ref=f4e1]:
+  - main [ref=f4e2]:
+    - region "Thương hiệu VÍ VAY" [ref=f4e3]:
+      - img "Logo VÍ VAY" [ref=f4e4]
+      - paragraph [ref=f4e5]: VÍ VAY
+      - heading "Quản lý và tra cứu hồ sơ khoản vay" [level=1] [ref=f4e6]
+      - paragraph [ref=f4e7]: Đây là cổng hồ sơ. Hệ thống không nhận đơn vay, không phê duyệt và không đưa ra cam kết tài chính.
+    - region "Mở hồ sơ của bạn" [ref=f4e8]:
+      - tablist "Loại truy cập" [ref=f4e9]:
+        - tab "Khách hàng" [ref=f4e10] [cursor=pointer]
+        - tab "Quản trị" [selected] [ref=f4e11] [cursor=pointer]
+      - tabpanel "Quản trị" [ref=f4e25]:
+        - paragraph [ref=f4e26]: Khu vực hạn chế
+        - heading "Đăng nhập quản trị" [level=2] [ref=f4e27]
+        - paragraph [ref=f4e28]: Chỉ dành cho người quản trị được chủ dự án ủy quyền.
+        - generic [ref=f4e29]:
+          - generic [ref=f4e30]: Tên đăng nhập
+          - textbox "Tên đăng nhập" [active] [ref=f4e31]
+          - generic [ref=f4e32]: Mật khẩu
+          - textbox "Mật khẩu" [ref=f4e33]
+          - button "Đăng nhập an toàn" [ref=f4e34] [cursor=pointer]
+      - status [ref=f4e22]
+      - paragraph [ref=f4e23]: Không nhập CCCD, mật khẩu ngân hàng, OTP hoặc PIN vào hệ thống này.
+  - contentinfo [ref=f4e24]: © 2026 VÍ VAY · Hồ sơ được bảo vệ bằng mã truy cập.

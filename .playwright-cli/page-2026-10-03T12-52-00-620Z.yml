@@ -1,0 +1,102 @@
+- generic [ref=f1e1]:
+  - main [ref=f1e2]:
+    - generic [ref=f1e3]:
+      - link "VÍ VAY trang chủ" [ref=f1e4] [cursor=pointer]:
+        - /url: /
+        - img "Logo VÍ VAY" [ref=f1e5]
+        - generic [ref=f1e6]:
+          - strong [ref=f1e7]: VÍ VAY
+          - generic [ref=f1e8]: Quản lý hồ sơ
+      - button "Đăng xuất" [ref=f1e9] [cursor=pointer]
+    - generic [ref=f1e10]:
+      - generic [ref=f1e11]:
+        - paragraph [ref=f1e12]: Khu vực quản trị
+        - heading "Hồ sơ khoản vay" [level=1] [ref=f1e13]
+        - paragraph [ref=f1e14]: Nhập dữ liệu được chủ dự án phê duyệt. Mọi thay đổi quan trọng đều được ghi audit log đã che dữ liệu nhạy cảm.
+      - button "Tạo hồ sơ" [ref=f1e15] [cursor=pointer]
+    - region "Tổng quan" [ref=f1e16]:
+      - article [ref=f1e17]:
+        - generic [ref=f1e18]: Hồ sơ đang quản lý
+        - strong [ref=f1e19]: "0"
+      - article [ref=f1e20]:
+        - generic [ref=f1e21]: Tổng giải ngân (dữ liệu nhập)
+        - strong [ref=f1e22]: 0 đ
+      - article [ref=f1e23]:
+        - generic [ref=f1e24]: Tổng cần thanh toán (dữ liệu nhập)
+        - strong [ref=f1e25]: 0 đ
+    - region [ref=f1e26]:
+      - generic [ref=f1e27]:
+        - generic [ref=f1e28]:
+          - paragraph [ref=f1e29]: Danh sách
+          - heading "Hồ sơ" [level=2] [ref=f1e30]
+        - status [ref=f1e42]: 0 hồ sơ
+      - table [ref=f1e32]:
+        - rowgroup [ref=f1e33]:
+          - row [ref=f1e34]:
+            - columnheader "Mã khoản vay" [ref=f1e35]
+            - columnheader "Khách hàng" [ref=f1e36]
+            - columnheader "Trạng thái" [ref=f1e37]
+            - columnheader "Cần thanh toán" [ref=f1e38]
+            - columnheader "Ngày trả" [ref=f1e39]
+            - columnheader "Thao tác" [ref=f1e40]
+        - rowgroup [ref=f1e43]:
+          - row [ref=f1e44]:
+            - cell "Chưa có hồ sơ nào." [ref=f1e45]
+  - dialog [ref=f1e46]:
+    - generic [ref=f1e47]:
+      - banner [ref=f1e48]:
+        - generic [ref=f1e49]:
+          - paragraph [ref=f1e50]: Hồ sơ khoản vay
+          - heading "Tạo hồ sơ" [level=2] [ref=f1e51]
+        - button "Đóng" [ref=f1e52] [cursor=pointer]: ×
+      - paragraph [ref=f1e53]: Mã khoản vay được tự sinh và không thể chỉnh sửa. Không nhập CCCD, OTP, PIN hoặc mật khẩu ngân hàng.
+      - generic [ref=f1e54]:
+        - generic [ref=f1e55]:
+          - text: Mã khoản vay
+          - textbox "Mã khoản vay" [ref=f1e56]: Sẽ tự sinh sau khi lưu
+        - generic [ref=f1e57]:
+          - text: Họ tên
+          - textbox "Họ tên" [active] [ref=f1e58]
+        - generic [ref=f1e59]:
+          - text: Số điện thoại
+          - textbox "Số điện thoại" [ref=f1e60]
+        - generic [ref=f1e61]:
+          - text: Trạng thái khoản vay
+          - textbox "Trạng thái khoản vay" [ref=f1e62]:
+            - /placeholder: "Ví dụ: Đang xử lý"
+            - text: Đang xử lý
+        - generic [ref=f1e63]:
+          - text: Số tiền cần thanh toán
+          - spinbutton "Số tiền cần thanh toán" [ref=f1e64]
+        - generic [ref=f1e65]:
+          - text: Số tiền giải ngân
+          - spinbutton "Số tiền giải ngân" [ref=f1e66]
+        - generic [ref=f1e67]:
+          - text: Ngày giải ngân
+          - textbox "Ngày giải ngân" [ref=f1e68]
+        - generic [ref=f1e69]:
+          - text: Ngày trả
+          - textbox "Ngày trả" [ref=f1e70]
+        - generic [ref=f1e71]:
+          - text: Phí/lãi hiển thị
+          - textbox "Phí/lãi hiển thị" [ref=f1e72]:
+            - /placeholder: "Ví dụ: 2,00%/tháng — theo nội dung đã duyệt"
+        - generic [ref=f1e73]:
+          - text: Tên chủ tài khoản thanh toán
+          - textbox "Tên chủ tài khoản thanh toán" [ref=f1e74]
+        - generic [ref=f1e75]:
+          - text: Ngân hàng thanh toán
+          - textbox "Ngân hàng thanh toán" [ref=f1e76]
+        - generic [ref=f1e77]:
+          - text: Số tài khoản thanh toán
+          - textbox "Số tài khoản thanh toán" [ref=f1e78]
+      - generic [ref=f1e79]:
+        - button "Tạo mã truy cập mới" [ref=f1e80] [cursor=pointer]
+        - button "Hủy" [ref=f1e81] [cursor=pointer]
+        - button "Lưu hồ sơ" [ref=f1e82] [cursor=pointer]
+      - status [ref=f1e83]
+      - generic [ref=f1e84]:
+        - heading "Mã truy cập khách hàng" [level=3] [ref=f1e85]
+        - paragraph [ref=f1e86]: Mã này chỉ hiển thị một lần. Chuyển qua kênh riêng tư, không gửi trong URL.
+        - code
+        - button "Sao chép mã" [ref=f1e87] [cursor=pointer]

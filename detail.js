@@ -1,4 +1,4 @@
-(() => {
+﻿(() => {
     const csrf = () => sessionStorage.getItem('vivay_csrf') || '';
     const money = (value) => new Intl.NumberFormat('vi-VN').format(Number(value) || 0) + ' đ';
     const date = (value) => {
@@ -22,7 +22,6 @@
         text('customer-name', record.customerName, 'Hồ sơ khoản vay');
         text('customer-phone', maskPhone(record.customerPhone), '');
         text('loan-status', record.loanStatus);
-        text('loan-code', record.loanCode);
         text('loan-amount', money(record.loanAmount), '0 đ');
         text('disbursed-amount', money(record.disbursedAmount), '0 đ');
         text('disbursement-date', date(record.disbursementDate));

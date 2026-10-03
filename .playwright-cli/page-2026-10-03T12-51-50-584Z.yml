@@ -1,0 +1,41 @@
+- main [ref=f1e2]:
+  - generic [ref=f1e3]:
+    - link "VÍ VAY trang chủ" [ref=f1e4] [cursor=pointer]:
+      - /url: /
+      - img "Logo VÍ VAY" [ref=f1e5]
+      - generic [ref=f1e6]:
+        - strong [ref=f1e7]: VÍ VAY
+        - generic [ref=f1e8]: Quản lý hồ sơ
+    - button "Đăng xuất" [ref=f1e9] [cursor=pointer]
+  - generic [ref=f1e10]:
+    - generic [ref=f1e11]:
+      - paragraph [ref=f1e12]: Khu vực quản trị
+      - heading "Hồ sơ khoản vay" [level=1] [ref=f1e13]
+      - paragraph [ref=f1e14]: Nhập dữ liệu được chủ dự án phê duyệt. Mọi thay đổi quan trọng đều được ghi audit log đã che dữ liệu nhạy cảm.
+    - button "Tạo hồ sơ" [ref=f1e15] [cursor=pointer]
+  - region "Tổng quan" [ref=f1e16]:
+    - article [ref=f1e17]:
+      - generic [ref=f1e18]: Hồ sơ đang quản lý
+      - strong [ref=f1e19]: "0"
+    - article [ref=f1e20]:
+      - generic [ref=f1e21]: Tổng giải ngân (dữ liệu nhập)
+      - strong [ref=f1e22]: 0 đ
+    - article [ref=f1e23]:
+      - generic [ref=f1e24]: Tổng cần thanh toán (dữ liệu nhập)
+      - strong [ref=f1e25]: 0 đ
+  - region [ref=f1e26]:
+    - generic [ref=f1e27]:
+      - generic [ref=f1e28]:
+        - paragraph [ref=f1e29]: Danh sách
+        - heading "Hồ sơ" [level=2] [ref=f1e30]
+      - status
+    - table [ref=f1e32]:
+      - rowgroup [ref=f1e33]:
+        - row [ref=f1e34]:
+          - columnheader "Mã khoản vay" [ref=f1e35]
+          - columnheader "Khách hàng" [ref=f1e36]
+          - columnheader "Trạng thái" [ref=f1e37]
+          - columnheader "Cần thanh toán" [ref=f1e38]
+          - columnheader "Ngày trả" [ref=f1e39]
+          - columnheader "Thao tác" [ref=f1e40]
+      - rowgroup

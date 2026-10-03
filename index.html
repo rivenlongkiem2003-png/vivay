@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta name="description" content="VÍ VAY — tra cứu hồ sơ khoản vay có kiểm soát truy cập.">
+  <meta name="description" content="VÍ VAY – tra cứu hồ sơ khoản vay có kiểm soát truy cập.">
   <meta property="og:title" content="VÍ VAY | Tra cứu hồ sơ">
   <meta property="og:description" content="Cổng tra cứu hồ sơ có kiểm soát truy cập.">
   <meta property="og:image" content="/assets/vivay-logo.png">
@@ -22,34 +22,15 @@
       <p class="brand-copy">Đây là cổng hồ sơ. Hệ thống không nhận đơn vay, không phê duyệt và không đưa ra cam kết tài chính.</p>
     </section>
     <section class="auth-card" aria-labelledby="access-title">
-      <div class="tab-list" role="tablist" aria-label="Loại truy cập">
-        <button class="tab-button is-active" id="customer-tab" type="button" role="tab" aria-selected="true" aria-controls="customer-panel">Khách hàng</button>
-        <button class="tab-button" id="admin-tab" type="button" role="tab" aria-selected="false" aria-controls="admin-panel">Quản trị</button>
-      </div>
-      <div id="customer-panel" role="tabpanel" aria-labelledby="customer-tab">
-        <p class="eyebrow">Tra cứu riêng tư</p>
-        <h2 id="access-title">Mở hồ sơ của bạn</h2>
-        <p class="intro">Nhập mã khoản vay và mã truy cập được đơn vị vận hành cung cấp qua kênh riêng tư.</p>
-        <form id="customer-login-form" novalidate>
-          <label for="loan-code">Mã khoản vay</label>
-          <input id="loan-code" name="loanCode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="VV-YYYYMMDD-..." required>
-          <label for="access-code">Mã truy cập</label>
-          <input id="access-code" name="accessCode" type="password" autocomplete="one-time-code" spellcheck="false" placeholder="Mã truy cập riêng tư" required>
-          <button class="button button-primary" type="submit">Xem hồ sơ</button>
-        </form>
-      </div>
-      <div id="admin-panel" role="tabpanel" aria-labelledby="admin-tab" hidden>
-        <p class="eyebrow">Khu vực hạn chế</p>
-        <h2>Đăng nhập quản trị</h2>
-        <p class="intro">Chỉ dành cho người quản trị được chủ dự án ủy quyền.</p>
-        <form id="admin-login-form" novalidate>
-          <label for="admin-username">Tên đăng nhập</label>
-          <input id="admin-username" name="username" autocomplete="username" required>
-          <label for="admin-password">Mật khẩu</label>
-          <input id="admin-password" name="password" type="password" autocomplete="current-password" required>
-          <button class="button button-primary" type="submit">Đăng nhập an toàn</button>
-        </form>
-      </div>
+      <p class="eyebrow">Tra cứu riêng tư</p>
+      <h2 id="access-title">Mở hồ sơ của bạn</h2>
+      <p class="intro">Nhập số điện thoại đã đăng ký để xem thông tin khoản vay của bạn.</p>
+      <form id="phone-login-form" novalidate>
+        <label for="phone">Số điện thoại</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+          spellcheck="false" placeholder="Nhập số điện thoại" required>
+        <button class="button button-primary" type="submit">Xem hồ sơ</button>
+      </form>
       <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
       <p class="privacy-note">Không nhập CCCD, mật khẩu ngân hàng, OTP hoặc PIN vào hệ thống này.</p>
     </section>
