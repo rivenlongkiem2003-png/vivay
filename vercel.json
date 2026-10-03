@@ -3,7 +3,6 @@
   "buildCommand": "npm run build",
   "functions": {
     "api/index.mjs": {
-      "runtime": "nodejs22.x",
       "maxDuration": 30,
       "includeFiles": "{app.js,server-app.js,index.html,detail.html,admin.html,*.css,login.js,detail.js,admin.js,assets/**}"
     }

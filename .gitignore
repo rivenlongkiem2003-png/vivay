@@ -8,6 +8,8 @@ output/
 !.env.example
 .neon/
 .playwright-cli/
+.vercel/
+.vercel-cli-data/
 *.pem
 *.key
 *.p12
