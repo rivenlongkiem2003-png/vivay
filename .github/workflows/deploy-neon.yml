@@ -12,8 +12,11 @@ jobs:
     environment: production
     env:
       NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
-      NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }}
-      NEON_BRANCH: ${{ secrets.NEON_BRANCH }}
+      # Neon creates the project ID as a GitHub Actions Variable; it is not
+      # sensitive.  The production branch is explicit so a deployment can
+      # never accidentally target a preview branch.
+      NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+      NEON_BRANCH: ${{ vars.NEON_BRANCH || 'production' }}
       SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
       OWNER_PRODUCTION_APPROVED: ${{ secrets.OWNER_PRODUCTION_APPROVED }}
       BOOTSTRAP_ADMIN_USERNAME: ${{ secrets.BOOTSTRAP_ADMIN_USERNAME }}
