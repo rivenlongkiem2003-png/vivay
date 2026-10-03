@@ -6,6 +6,7 @@ backup*/
 output/
 .env*
 !.env.example
+.neon/
 *.pem
 *.key
 *.p12

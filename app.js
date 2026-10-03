@@ -459,4 +459,23 @@ async function backfillSecureLoanAccess(prisma) {
     return updated;
 }
 
-module.exports = { InputError, backfillSecureLoanAccess, bootstrapAdmin, createApp, generateAccessCode, generateLoanCode, hashAccessCode, hashPassword, maskValue, serializeLoan, verifyPassword };
+module.exports = {
+    InputError,
+    auditSnapshot,
+    backfillSecureLoanAccess,
+    bootstrapAdmin,
+    changedSnapshots,
+    createApp,
+    generateAccessCode,
+    generateLoanCode,
+    hashAccessCode,
+    hashPassword,
+    maskValue,
+    normalizeText,
+    safeEqual,
+    serializeAdminLoan,
+    serializeLoan,
+    toLoanInput,
+    userDataFromInput,
+    verifyPassword
+};

@@ -4,6 +4,9 @@ const { join } = require('path');
 
 const root = process.cwd();
 const targets = ['app.js', 'server.js', 'login.js', 'detail.js', 'admin.js'];
+if (existsSync(join(root, 'functions'))) {
+    readdirSync(join(root, 'functions')).filter((file) => /\.(?:js|mjs)$/.test(file) && file !== 'generated-assets.mjs').forEach((file) => targets.push(join('functions', file)));
+}
 if (existsSync(join(root, 'scripts'))) {
     readdirSync(join(root, 'scripts')).filter((file) => file.endsWith('.js')).forEach((file) => targets.push(join('scripts', file)));
 }

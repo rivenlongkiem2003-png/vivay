@@ -12,7 +12,7 @@ The starting project was a Node.js/Express app using Prisma/PostgreSQL with root
 - Rebuilt public, customer record and admin interfaces: `index.html`, `detail.html`, `admin.html`, CSS/JS, `theme.css`.
 - New VÍ VAY logo asset: `assets/vivay-logo.png`.
 - Additive Prisma migration: `prisma/migrations/20261003000000_vivay_security_hardening/migration.sql`.
-- Security/test tooling: `.env.example`, `.gitignore`, `scripts/`, `test/`, `render.yaml`, `docs/RENDER_DEPLOYMENT.md`.
+- Security/test tooling: `.env.example`, `.gitignore`, `scripts/`, `test/`, `neon.ts`, `functions/vivay.mjs`, GitHub Actions and `docs/NEON_DEPLOYMENT.md`.
 - Governance documents in `docs/`.
 
 ## 3. DB changes
@@ -60,9 +60,10 @@ Passed locally:
 
 | Check | Result |
 | --- | --- |
-| JavaScript syntax lint | Passed (11 files) |
+| JavaScript syntax lint | Passed (14 files, including the Neon Function entrypoint) |
 | API integration: unauthenticated admin denial, hashed admin login, CSRF denial, create, customer-only record access, IDOR denial, update and audit | Passed |
 | Security unit tests: scrypt verification, loan-code entropy/format, CSP/static exposure/legacy config denial | Passed |
+| Neon Function test: same-origin static UI, production headers, admin/customer isolation, CSRF and production approval gate | Passed |
 | Prisma schema validation | Passed |
 | Build (`npm run build`) | Passed |
 | Current tracked-file secret scan | Passed |
@@ -76,9 +77,9 @@ Browser E2E/responsive test passed against a temporary fake-data server using th
 
 Pushed to `https://github.com/huyng1801/vivay` on `main` with commits `393c494` (`feat: secure Vi Vay record management`), `2725820` (`docs: record release security gates`) and `e735b2d` (`chore: prepare Render deployment`). The previous remote was replaced with this token-free URL; the exposed historical token still must be revoked/rotated.
 
-## 11. Render deployment
+## 11. Neon deployment
 
-Not deployed. `render.yaml` is prepared with a Singapore Node service, `/health` check, production environment-variable configuration, bounded database pool and `prisma migrate deploy`; runtime refuses production unless `OWNER_PRODUCTION_APPROVED=true` and an HTTPS origin is available (via `PUBLIC_ORIGIN` or Render's hostname).
+Not deployed. `neon.ts` declares one `vivay` Node.js Function that serves both the allow-listed UI and API from a Neon branch. The Function receives `DATABASE_URL` from Neon at runtime, has a per-isolate pool cap of 3, and is deployed by a manual GitHub Actions workflow that runs additive Prisma migrations first. `render.yaml` and its runbook were removed so the repository cannot accidentally configure a Render deployment.
 
 ## 12. Production URL
 

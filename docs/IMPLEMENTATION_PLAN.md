@@ -12,9 +12,9 @@ Chuyển ứng dụng hiện có từ trang chào mời vay sang công cụ qu�
 4. Thay xác thực phía client bằng session HttpOnly phía server; giới hạn tốc độ đăng nhập, CSRF, RBAC và kiểm soát IDOR.
 5. Bổ sung các trường hồ sơ do admin quản lý, mã khoản vay tự sinh, access code ngẫu nhiên và audit log.
 6. Bỏ thu thập/hiển thị CCCD và chức năng upload QR không cần thiết; giữ dữ liệu legacy nguyên trạng trong DB để tránh mất dữ liệu.
-7. Thêm security headers, noindex, allow-list static assets, quản lý secrets và cấu hình Render an toàn.
+7. Thêm security headers, noindex, allow-list static assets, quản lý secrets và cấu hình Neon Functions an toàn.
 8. Chạy unit/API/UI/E2E/responsive/security smoke tests; ghi kết quả thực tế.
-9. Không push/deploy production khi chưa có repository/Render access và các xác nhận của chủ dự án trong checklist pháp lý.
+9. Không push/deploy production khi chưa có repository/Neon access và các xác nhận của chủ dự án trong checklist pháp lý.
 
 ## Nguyên tắc migration
 
