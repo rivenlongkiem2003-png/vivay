@@ -17,19 +17,12 @@
     "start": "node server.js",
     "postinstall": "prisma generate",
     "build": "npm run lint && prisma generate",
-    "neon:prepare": "node scripts/build-neon-assets.js",
-    "neon:migrate": "prisma migrate deploy",
-    "neon:deploy": "npm run neon:prepare && neon deploy --env .env",
-    "neon:plan": "npm run neon:prepare && neon config plan --env .env",
+    "supabase:migrate": "prisma migrate deploy",
     "lint": "node scripts/lint.js",
     "test": "node --test test/**/*.test.js",
     "test:api": "node --test test/api.integration.test.js",
     "test:security": "node --test test/security.test.js",
     "secret:scan": "node scripts/secret-scan.js"
   },
-  "devDependencies": {
-    "@neon/config": "^1.8.3",
-    "@neon/functions": "^0.11.0",
-    "neon": "^8.0.2"
-  }
+  "devDependencies": {}
 }

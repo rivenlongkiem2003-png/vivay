@@ -20,7 +20,7 @@ Reviewed: 2026-10-03 (Asia/Bangkok). This is a technical risk review, **not lega
 
 ## Required owner/counsel decisions before release
 
-Complete every unchecked item in `LEGAL_DEPLOYMENT_CHECKLIST.md`, including the legal identity/operator, authority to use VÍ VAY assets, ownership/authority for each beneficiary account, approved privacy/terms and written production authorization. Obtain a counsel review of the actual model and final consumer-facing content. Do not use a Neon Function deployment, public DNS, real customer records or migration until those approvals and a verified database backup exist.
+Complete every unchecked item in `LEGAL_DEPLOYMENT_CHECKLIST.md`, including the legal identity/operator, authority to use VÍ VAY assets, ownership/authority for each beneficiary account, approved privacy/terms and written production authorization. Obtain a counsel review of the actual model and final consumer-facing content. Do not use a Vercel deployment, public DNS, real customer records or migration until those approvals and a verified database backup exist.
 
 ## Primary sources consulted
 
