@@ -16,4 +16,4 @@ Production bị chặn ở cấp runtime cho đến khi `OWNER_PRODUCTION_APPROV
 
 Các giới hạn/rủi ro kỹ thuật và compliance hiện có trong [LEGAL_REVIEW.md](docs/LEGAL_REVIEW.md), [RISK_FINDINGS.md](docs/RISK_FINDINGS.md) và [IMPLEMENTATION_REPORT.md](docs/IMPLEMENTATION_REPORT.md).
 
-Giao diện và API cùng chạy trong một Vercel Function tại `api/index.mjs`. Supabase cung cấp PostgreSQL; ứng dụng không đưa Supabase service-role key ra trình duyệt. Xem [VERCEL_SUPABASE_DEPLOYMENT.md](docs/VERCEL_SUPABASE_DEPLOYMENT.md) để tạo database, chạy migration, liên kết repo với Vercel và khai báo Environment Variables.
+Giao diện và API cùng chạy trong một Vercel Function tại `api/index.js`. Supabase cung cấp PostgreSQL; ứng dụng không đưa Supabase service-role key ra trình duyệt. Xem [VERCEL_SUPABASE_DEPLOYMENT.md](docs/VERCEL_SUPABASE_DEPLOYMENT.md) để tạo database, chạy migration, liên kết repo với Vercel và khai báo Environment Variables.

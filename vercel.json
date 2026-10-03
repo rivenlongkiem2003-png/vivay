@@ -4,12 +4,12 @@
   "framework": null,
   "buildCommand": "npm run build",
   "functions": {
-    "api/index.mjs": {
+    "api/index.js": {
       "maxDuration": 30,
       "includeFiles": "{app-core.cjs,server-app.js,index.html,detail.html,admin.html,*.css,login.js,detail.js,admin.js,assets/**}"
     }
   },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index.mjs" }
+    { "source": "/(.*)", "destination": "/api/index.js" }
   ]
 }

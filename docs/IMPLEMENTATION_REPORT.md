@@ -12,7 +12,7 @@ The starting project was a Node.js/Express app using Prisma/PostgreSQL with root
 - Rebuilt public, customer record and admin interfaces: `index.html`, `detail.html`, `admin.html`, CSS/JS, `theme.css`.
 - New VÍ VAY logo asset: `assets/vivay-logo.png`.
 - Additive Prisma migration: `prisma/migrations/20261003000000_vivay_security_hardening/migration.sql`.
-- Security/test tooling: `.env.example`, `.gitignore`, `scripts/`, `test/`, `api/index.mjs`, `vercel.json` and `docs/VERCEL_SUPABASE_DEPLOYMENT.md`.
+- Security/test tooling: `.env.example`, `.gitignore`, `scripts/`, `test/`, `api/index.js`, `vercel.json` and `docs/VERCEL_SUPABASE_DEPLOYMENT.md`.
 - Governance documents in `docs/`.
 
 ## 3. DB changes

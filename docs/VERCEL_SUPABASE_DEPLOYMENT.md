@@ -4,7 +4,7 @@ Trạng thái: cấu hình đã sẵn sàng; public production vẫn bị khóa 
 
 ## Kiến trúc
 
-Vercel phục vụ cả giao diện và API qua `api/index.mjs`. Supabase chỉ cung cấp PostgreSQL; không đưa Supabase service-role key hoặc database URL ra trình duyệt.
+Vercel phục vụ cả giao diện và API qua `api/index.js`. Supabase chỉ cung cấp PostgreSQL; không đưa Supabase service-role key hoặc database URL ra trình duyệt.
 
 ## 1. Tạo database Supabase
 

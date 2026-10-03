@@ -1,6 +1,4 @@
-import serverApp from '../server-app.js';
-
-const { createDatabaseApp } = serverApp;
+const { createDatabaseApp } = require('../server-app.js');
 let appPromise;
 
 async function getApp() {
@@ -13,7 +11,7 @@ async function getApp() {
     return appPromise;
 }
 
-export default async function vercelHandler(req, res) {
+module.exports = async function vercelHandler(req, res) {
     try {
         const app = await getApp();
         return app(req, res);
