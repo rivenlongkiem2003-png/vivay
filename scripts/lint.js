@@ -3,7 +3,7 @@ const { existsSync, readdirSync } = require('fs');
 const { join } = require('path');
 
 const root = process.cwd();
-const targets = ['app-core.cjs', 'server-local.cjs', 'server-app.js', 'api/index.js', 'login.js', 'detail.js', 'admin.js'];
+const targets = ['app-core.cjs', 'server-local.cjs', 'server-app.js', 'index.js', 'login.js', 'detail.js', 'admin.js'];
 if (existsSync(join(root, 'functions'))) {
     readdirSync(join(root, 'functions')).filter((file) => /\.(?:js|mjs)$/.test(file) && file !== 'generated-assets.mjs').forEach((file) => targets.push(join('functions', file)));
 }

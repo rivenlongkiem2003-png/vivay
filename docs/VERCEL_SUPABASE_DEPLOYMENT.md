@@ -4,7 +4,7 @@ Trạng thái: cấu hình đã sẵn sàng; public production vẫn bị khóa 
 
 ## Kiến trúc
 
-Vercel phục vụ cả giao diện và API qua `api/index.js`. Supabase chỉ cung cấp PostgreSQL; không đưa Supabase service-role key hoặc database URL ra trình duyệt.
+Vercel phục vụ cả giao diện và API qua `index.js` (Express Function). Supabase chỉ cung cấp PostgreSQL; không đưa Supabase service-role key hoặc database URL ra trình duyệt.
 
 ## 1. Tạo database Supabase
 
@@ -27,7 +27,7 @@ Không chạy `prisma migrate reset` trên project Supabase có dữ liệu.
 
 1. Vào Vercel → **Add New Project** → import `y038910080827-commits/vivay`.
 2. Framework chọn **Other**, Build Command để `npm run build`, Output Directory để trống.
-3. Vercel sẽ nhận `vercel.json`, build `api/index.js` thành Node.js Function và tự deploy mỗi lần push vào `main`.
+3. Vercel sẽ nhận `vercel.json`, build root `index.js` thành Express Function và tự deploy mỗi lần push vào `main`.
 
 ## 4. Environment Variables trên Vercel
 

@@ -12,7 +12,7 @@ The starting project was a Node.js/Express app using Prisma/PostgreSQL with root
 - Rebuilt public, customer record and admin interfaces: `index.html`, `detail.html`, `admin.html`, CSS/JS, `theme.css`.
 - New VÍ VAY logo asset: `assets/vivay-logo.png`.
 - Additive Prisma migration: `prisma/migrations/20261003000000_vivay_security_hardening/migration.sql`.
-- Security/test tooling: `.env.example`, `.gitignore`, `scripts/`, `test/`, `api/index.js`, `vercel.json` and `docs/VERCEL_SUPABASE_DEPLOYMENT.md`.
+- Security/test tooling: `.env.example`, `.gitignore`, `scripts/`, `test/`, `index.js`, `vercel.json` and `docs/VERCEL_SUPABASE_DEPLOYMENT.md`.
 - Governance documents in `docs/`.
 
 ## 3. DB changes
@@ -79,7 +79,7 @@ Pushed to `https://github.com/huyng1801/vivay` on `main` with commits `393c494` 
 
 ## 11. Vercel + Supabase deployment
 
-The repository now uses `api/index.js` as a Vercel Node.js Function and Supabase PostgreSQL through `DATABASE_URL`. Vercel builds from GitHub automatically; the database migration remains an explicit operator step. See `docs/VERCEL_SUPABASE_DEPLOYMENT.md`.
+The repository now uses root `index.js` as a Vercel Express Function and Supabase PostgreSQL through `DATABASE_URL`. Vercel builds from GitHub automatically; the database migration remains an explicit operator step. See `docs/VERCEL_SUPABASE_DEPLOYMENT.md`.
 
 ## 12. Production URL
 

@@ -1,4 +1,5 @@
-const { createDatabaseApp } = require('../server-app.js');
+const { createDatabaseApp } = require('./server-app.js');
+
 let appPromise;
 
 async function getApp() {
@@ -19,4 +20,4 @@ module.exports = async function vercelHandler(req, res) {
         console.error('Vercel startup failed:', error?.message || 'Unknown error');
         return res.status(503).json({ success: false, message: 'Dịch vụ chưa sẵn sàng.' });
     }
-}
+};
