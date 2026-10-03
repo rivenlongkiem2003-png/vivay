@@ -5,21 +5,7 @@
     "api/index.js": {
       "runtime": "nodejs22.x",
       "maxDuration": 30,
-      "includeFiles": [
-        "app.js",
-        "server-app.js",
-        "index.html",
-        "detail.html",
-        "admin.html",
-        "index.css",
-        "detail.css",
-        "admin.css",
-        "theme.css",
-        "login.js",
-        "detail.js",
-        "admin.js",
-        "assets/**"
-      ]
+      "includeFiles": "{app.js,server-app.js,index.html,detail.html,admin.html,*.css,login.js,detail.js,admin.js,assets/**}"
     }
   },
   "rewrites": [
